@@ -107,14 +107,19 @@ setCoord(num){
     boxCoordinates.Push(num)
     if (boxCoordinates.length = 2){
         cartesianCoordinates := boxToCartesian(boxCoordinates[1], boxCoordinates[2])
+        toggleLayer("Entry")
     }
 }
 
-; This function handles updating the coordinates when using the arrow keys/WASD
+; This function handles updating the coordinates when using the arrow keys/WASD, and then sending the appropriate cursor instructions
+; The function also automatically wraps, so moving the cursor down at the limit of the grid will result in moving back to the top
 coordUpdate(xOrY, movement){
     global
     if (xOrY = "x"){
         oldX := cartesianCoordinates[1]
+        ; The equation below enables automatic wrapping
+        ; Essentially, if the updated coordinates are 0 or above the square size, the coordinates get set to the square size or 1 respectively
+        ; If the updated coordinates are at the maximum, the equation results in 0. Since this reads as false, they default to the maximum square size
         cartesianCoordinates[1] := Mod((cartesianCoordinates[1] + movement), sqrSize) || sqrSize
         difference := cartesianCoordinates[1] - oldX
         cursorMove(difference, 0)
