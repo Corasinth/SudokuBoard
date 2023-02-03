@@ -16,9 +16,13 @@ yCoordinate := 1080
 ; Future iterations may include navigation support for larger and smaller sudoku grids, as long as the large and small squares have the same side length, the conversion equations should still work. Probably.
 sqrSize := 9
 rootSqrSize := Sqrt(SqrSize)
+
 ; Array that holds the current cartesian coordinates of the cursor
 ; Squares are counted 1-9 starting at the top left
-cartesianCoordinates := []
+cartesianCoordinates := [0, 0]
+
+; Array that tracks box coordinates for navigation and initial coordinate setting
+boxCoordinates := []
 
 ; Universal quit and suspend key definitions go here
 ; Edit key defitions and input level as desired
@@ -94,8 +98,21 @@ boxToCartesian(a, b){
     Return [x, y]
 }
 
+; Set starting coordinates by monitoring the box array, and once it fills up setting the cartesian coordinates accordingly
+setCoord(num){
+    global
+    if (boxCoordinates.length >= 2){
+        boxCoordinates := []
+    }
+    boxCoordinates.Push(num)
+    if (boxCoordinates.length = 2){
+        cartesianCoordinates := boxToCartesian(boxCoordinates[1], boxCoordinates[2])
+    }
+}
+
 ; This function handles updating the coordinates when using the arrow keys/WASD
 coordUpdate(xOrY, movement){
+    global
     if (xOrY = "x"){
         oldX := cartesianCoordinates[1]
         cartesianCoordinates[1] := Mod((cartesianCoordinates[1] + movement), sqrSize) || sqrSize
