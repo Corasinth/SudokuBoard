@@ -12,6 +12,12 @@ tooltipOn := 1
 xCoordinate := 1920
 yCoordinate := 1080
 
+; sqrSize refers to the length of both the large and small squares that make up the sudoku grid
+; Future iterations may include navigation support for larger and smaller sudoku grids, as long as the large and small squares have the same side length, the conversion equations should still work. Probably.
+sqrSize := 3
+
+
+
 ; Universal quit and suspend key definitions go here
 ; Edit key defitions and input level as desired
 #InputLevel 0
@@ -71,6 +77,25 @@ tooltipToggle(){
         ToolTip()
     }
 }
+
+sqrSize := 3
+
+; a := 1
+; b := 5
+
+x := 2
+y := 8
+
+a := Ceil(x/sqrSize) + ((Ceil(y/sqrSize)-1)*3)
+b := (Mod((x-1), sqrSize)) + ((Mod((y-1), sqrSize)*sqrSize)+1)
+
+; x := (Mod((a-1), sqrSize)*3) + (Mod((b-1), sqrSize)+1)
+; y := (a-(Mod((a-1), sqrSize))) + (Ceil(b/3)-1)
+
+
+MsgBox("Box Coordinates: " a ", " b)
+
+; MsgBox("Box Coordinates: " x ", " y)
 
 ; ============================== INCLUDE HOTKEYS ==============================
 ; Ensures the input level is above the default for other scripts
