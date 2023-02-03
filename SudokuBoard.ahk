@@ -109,8 +109,12 @@ coordUpdate(xOrY, movement){
     }
 }
 
+; Handles moving the cursor via arrow key inputs the correct amount
+; Parameters come in either negative or positive; the sign indicates the direction and the Absolute() function detrmines the distance of the movement
+; The distance can be 0, letting the function move the cursor in just one direction
 cursorMove(x, y){
-
+    x > 0 ? SendInput("{Right " Abs(x) "}") : SendInput("{Left " Abs(x) "}")
+    y > 0 ? SendInput("{Down " Abs(y) "}") : SendInput("Up" Abs(y) "}")
 }
 
 ; Function for updating cartesian coordinates that automatically wraps
