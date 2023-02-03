@@ -12,11 +12,13 @@ tooltipOn := 1
 xCoordinate := 1920
 yCoordinate := 1080
 
-; sqrSize refers to the length of both the large and small squares that make up the sudoku grid
+; rootSqrSize refers to the length of both the large and small squares that make up the sudoku grid
 ; Future iterations may include navigation support for larger and smaller sudoku grids, as long as the large and small squares have the same side length, the conversion equations should still work. Probably.
-sqrSize := 3
-
-
+sqrSize := 9
+rootSqrSize := Sqrt(SqrSize)
+; Array that holds the current cartesian coordinates of the cursor
+; Squares are counted 1-9 starting at the top left
+cartesianCoordinates := []
 
 ; Universal quit and suspend key definitions go here
 ; Edit key defitions and input level as desired
@@ -78,24 +80,43 @@ tooltipToggle(){
     }
 }
 
-sqrSize := 3
+; These two functions handle conversion between the two kinds of coordinate systems
+; For now, only the equation for calculating the little box is needed, but I'm leaving the big box calcuation here in case it's needed
+cartesianToBox(x, y){
+    ; a := Ceil(x/rootSqrSize) + ((Ceil(y/rootSqrSize)-1)*3)
+    b := (Mod((x-1), rootSqrSize)) + ((Mod((y-1), rootSqrSize)*rootSqrSize)+1)
+    Return b
+}
 
-; a := 1
-; b := 5
+boxToCartesian(a, b){
+    x := (Mod((a-1), rootSqrSize)*3) + (Mod((b-1), rootSqrSize)+1)
+    y := (a-(Mod((a-1), rootSqrSize))) + (Ceil(b/3)-1)
+    Return [x, y]
+}
 
-x := 2
-y := 8
+; This function handles updating the coordinates when using the arrow keys/WASD
+coordUpdate(xOrY, movement){
+    if (xOrY = "x"){
+        oldX := cartesianCoordinates[1]
+        cartesianCoordinates[1] := Mod((cartesianCoordinates[1] + movement), sqrSize) || sqrSize
+        difference := cartesianCoordinates[1] - oldX
+        cursorMove(difference, 0)
+    } else if (xOrY = "y"){
+        oldY:= cartesianCoordinates[2]
+        cartesianCoordinates[1] := Mod((cartesianCoordinates[2] + movement), sqrSize) || sqrSize
+        difference := cartesianCoordinates[1] - oldX
+        cursorMove(0, difference)
+    }
+}
 
-a := Ceil(x/sqrSize) + ((Ceil(y/sqrSize)-1)*3)
-b := (Mod((x-1), sqrSize)) + ((Mod((y-1), sqrSize)*sqrSize)+1)
+cursorMove(x, y){
 
-; x := (Mod((a-1), sqrSize)*3) + (Mod((b-1), sqrSize)+1)
-; y := (a-(Mod((a-1), sqrSize))) + (Ceil(b/3)-1)
+}
 
-
-MsgBox("Box Coordinates: " a ", " b)
-
-; MsgBox("Box Coordinates: " x ", " y)
+; Function for updating cartesian coordinates that automatically wraps
+; Function for taking navigation requests, checking how many navigations have been receives since last cycle, and generating and executing appropriate arrow commands
+; This must also translate destination coordinates into cartesian coordinates, and assign inner box destination when using big box navigation only (which means translating cartesian to box, detrmining box coords, and translating back to cartesian
+; Perhaps functions for translating cartesian to box and box to cartesian
 
 ; ============================== INCLUDE HOTKEYS ==============================
 ; Ensures the input level is above the default for other scripts
