@@ -36,6 +36,14 @@ Down::
 s::coordUpdate("y", 1)
 ; ====================================== LAYER TOGGLE ======================================
 NumpadAdd::
-CapsLock::toggleLayer("Entry")
+CapsLock::{
+    ; Wipe the memory of the coordinate tracker when leaving the layer so that big box only travel is possible
+    boxCoordinates := []
+    toggleLayer("Entry")
+}
 Numpad0::
-f::toggleLayer("Set-Coordinates")
+f::{
+    ; Wipe the memory of the coordinate tracker when leaving the layer so that big box only travel is possible
+    boxCoordinates := []
+    toggleLayer("Set-Coordinates")
+}
