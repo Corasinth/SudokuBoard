@@ -1,61 +1,35 @@
 #HotIf currentLayer = "Entry"
 ; ====================================== NINE-BY-NINE BLOCK =====================================
 Numpad1::
-u::{
-
-}
+u::1
 Numpad2::
-i::{
-
-}
+i::2
 Numpad3::
-o::{
-
-}
-
+o::3
 Numpad4::
-j::{
 
-}
+j::4
 Numpad5::
-k::{
-
-}
+k::5
 Numpad6::
-l::{
-
-}
+l::6
 
 Numpad7::
-m::{
-
-}
+m::7
 Numpad8::
-,::{
-
-}
+,::8
 Numpad9::
-.::{
-
-}
+.::9
 ; ====================================== ARROW NAV ======================================
 Right::
-d:: {
-    coordUpdate("x", 1)
-}
+d::coordUpdate("x", 1)
 Left::
-a::{
-    coordUpdate("x", -1)
-}
+a::coordUpdate("x", -1)
 
 Up::
-w::{
-    coordUpdate("y", -1)
-}
+w::coordUpdate("y", -1)
 Down::
-s::{
-    coordUpdate("y", 1)
-}
+s::coordUpdate("y", 1)
 ; ====================================== LAYER TOGGLE ======================================
 NumpadAdd::
 CapsLock::toggleLayer("Navigation")
