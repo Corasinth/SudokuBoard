@@ -24,6 +24,9 @@ cartesianCoordinates := [0, 0]
 ; Array that tracks box coordinates for navigation and initial coordinate setting
 boxCoordinates := []
 
+; Whether or not to move cursor via mouse or arrow keys
+mouseMode := 0
+
 ; Universal quit and suspend key definitions go here
 ; Edit key defitions and input level as desired
 #InputLevel 0
@@ -89,13 +92,19 @@ tooltipToggle(){
 ; These two functions handle conversion between the two kinds of coordinate systems
 ; For now, only the equation for calculating the little box is needed, but I'm leaving the big box calcuation here in case it's needed
 ; Round is nessecary to make sure the result is a simple integer, without any decimal places
-cartesianToBox(x, y){
-    ; a := Round(Ceil(x/rootSqrSize) + ((Ceil(y/rootSqrSize)-1)*3))
+cartesianToBox(coordArr){
+    x := coordArr[1]
+    y := coordArr[2]
+    
+    a := Round(Ceil(x/rootSqrSize) + ((Ceil(y/rootSqrSize)-1)*3))
     b := Round((Mod((x-1), rootSqrSize)) + ((Mod((y-1), rootSqrSize)*rootSqrSize)+1))
-    Return b
+    Return [a, b]
 }
 
-boxToCartesian(a, b){
+boxToCartesian(coordArr){
+    a := coordArr[1]
+    b := coordArr[2]
+
     x := Round((Mod((a-1), rootSqrSize)*3) + (Mod((b-1), rootSqrSize)+1))
     y := Round((a-(Mod((a-1), rootSqrSize))) + (Ceil(b/3)-1))
     Return [x, y]
@@ -112,7 +121,6 @@ setCoord(num){
         cartesianCoordinates := boxToCartesian(boxCoordinates[1], boxCoordinates[2])
         toggleLayer("Entry")
     }
-    ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 
 ; This function handles updating the coordinates when using the arrow keys/WASD, and then sending the appropriate cursor instructions
@@ -137,13 +145,43 @@ coordUpdate(xOrY, movement){
     }
 }
 
+; This function handles the primary 3x3 block navigation
+; The idea is that upon entering the big box key, the cursor immediately navigates to that large box in that relative position, navigating to the smaller box only on a second press
+navigate(num){
+    if (boxCoordinates.Length >= 2){
+        boxCoordinates := []
+    }
+
+    boxCoordinates.Push(num)
+
+    if (boxCoordinates.Length = 1){
+        currentBoxCoord := cartesianToBox(cartesianCoordinates[1], cartesianCoordinates[2])
+        targetCoord := boxToCartesian([boxCoordinates[1], currentBoxCoord[2]])
+        ; The difference is calculated as new vs old then sent to the appropriate movement function
+        movementArr := [targetCoord[1]-cartesianCoordinates[1], targetCoord[2]-cartesianCoordinates[2]]
+        if (mouseMode){
+            ; mouseMove(movementArr)
+        } else {
+            cursorMove(movementArr)
+        }
+    } else if (boxCoordinates.Length = 2){
+        ; If this is the second number entered then the current box coordinates are used directly, resulting in a movement within one a box rather than between
+        targetCoord := boxToCartesian(boxCoordinates)
+        movementArr := [targetCoord[1]-cartesianCoordinates[1], targetCoord[2]-cartesianCoordinates[2]]
+        if (mouseMode){
+            ; mouseMove(movementArr)
+        } else {
+            cursorMove(movementArr)
+        }
+    }
+}
+
 ; Handles moving the cursor via arrow key inputs the correct amount
 ; Parameters come in either negative or positive; the sign indicates the direction and the Absolute() function detrmines the distance of the movement
 ; The distance can be 0, letting the function move the cursor in just one direction
-cursorMove(x, y){
-    (x > 0) ? SendInput("{Right " Abs(x) "}") : SendInput("{Left " Abs(x) "}")
-    (y > 0) ? SendInput("{Down " Abs(y) "}") : SendInput("{Up " Abs(y) "}")
-    ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
+cursorMove(movementArr){
+    (movementArr[1] > 0) ? SendInput("{Right " Abs(movementArr[1]) "}") : SendInput("{Left " Abs(movementArr[1]) "}")
+    (movementArr[2] > 0) ? SendInput("{Down " Abs(movementArr[2]) "}") : SendInput("{Up " Abs(movementArr[2]) "}")
 }
 
 ; Function for updating cartesian coordinates that automatically wraps
