@@ -2,15 +2,16 @@
 #SingleInstance Force
 ; Sets absolute coordinates for tooltip
 CoordMode("ToolTip", "Screen")
+#Include ./util/ini-functions.ahk
 ; ============================== MAIN VARIABLES ==============================
 ; This is the tracker that determines the current layer
 ; Also the layer that k-plus starts up with
 currentLayer := "Entry"
 
 ; Tooltip and coordinate settings; whether or not to have a tooltip active and where it should be located
-tooltipOn := 1
-xCoordinate := 1920
-yCoordinate := 1080
+tooltipOn := readConfigSettings("tooltipOn")
+xCoordinate := readConfigSettings("xCoordinate")
+yCoordinate := readConfigSettings("yCoordinate")
 
 ; rootSqrSize refers to the length of both the large and small squares that make up the sudoku grid
 ; Future iterations may include navigation support for larger and smaller sudoku grids, as long as the large and small squares have the same side length, the conversion equations should still work. Probably.
@@ -29,7 +30,7 @@ mouseMode := 0
 
 ; Universal quit and suspend key definitions go here
 ; Edit key defitions and input level as desired
-#InputLevel 0
+#InputLevel 2
 #SuspendExempt True
 ; The suspend shortcut also disables the tooltip if it was active, though the tooltip remains if suspended via the GUI
 ^!+s::Suspend(-1)
