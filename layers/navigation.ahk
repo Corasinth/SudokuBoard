@@ -36,6 +36,6 @@ Down::
 s::coordUpdate("y", 1)
 ; ====================================== LAYER TOGGLE ======================================
 NumpadAdd::
-CapsLock::toggleLayer("Navigation")
+CapsLock::toggleLayer("Entry")
 Numpad0::
-f::toggleLayer("Entry")
+f::toggleLayer("Set-Coordinates")
