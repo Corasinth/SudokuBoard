@@ -118,7 +118,7 @@ setCoord(num){
     }
     boxCoordinates.Push(num)
     if (boxCoordinates.length = 2){
-        cartesianCoordinates := boxToCartesian(boxCoordinates[1], boxCoordinates[2])
+        cartesianCoordinates := boxToCartesian([boxCoordinates[1], boxCoordinates[2]])
         toggleLayer("Entry")
     }
 }
@@ -134,28 +134,27 @@ coordUpdate(xOrY, movement){
         ; If the updated coordinates are at the maximum, the equation results in 0. Since this reads as false, they default to the maximum square size
         cartesianCoordinates[1] := Mod((cartesianCoordinates[1] + movement), sqrSize) || sqrSize
         difference := cartesianCoordinates[1] - oldX
-        ; MsgBox(difference)
-        cursorMove(difference, 0)
+        cursorMove([difference, 0])
     } else if (xOrY = "y"){
         oldY := cartesianCoordinates[2]
         cartesianCoordinates[2] := Mod((cartesianCoordinates[2] + movement), sqrSize) || sqrSize
         difference := cartesianCoordinates[2] - oldY
-        ; MsgBox(difference)
-        cursorMove(0, difference)
+        cursorMove([0, difference])
     }
 }
 
 ; This function handles the primary 3x3 block navigation
 ; The idea is that upon entering the big box key, the cursor immediately navigates to that large box in that relative position, navigating to the smaller box only on a second press
 navigate(num){
-    if (boxCoordinates.Length >= 2){
+    global
+    if (boxCoordinates.length >= 2){
         boxCoordinates := []
     }
 
     boxCoordinates.Push(num)
 
-    if (boxCoordinates.Length = 1){
-        currentBoxCoord := cartesianToBox(cartesianCoordinates[1], cartesianCoordinates[2])
+    if (boxCoordinates.length = 1){
+        currentBoxCoord := cartesianToBox([cartesianCoordinates[1], cartesianCoordinates[2]])
         targetCoord := boxToCartesian([boxCoordinates[1], currentBoxCoord[2]])
         ; The difference is calculated as new vs old then sent to the appropriate movement function
         movementArr := [targetCoord[1]-cartesianCoordinates[1], targetCoord[2]-cartesianCoordinates[2]]
@@ -164,7 +163,7 @@ navigate(num){
         } else {
             cursorMove(movementArr)
         }
-    } else if (boxCoordinates.Length = 2){
+    } else if (boxCoordinates.length = 2){
         ; If this is the second number entered then the current box coordinates are used directly, resulting in a movement within one a box rather than between
         targetCoord := boxToCartesian(boxCoordinates)
         movementArr := [targetCoord[1]-cartesianCoordinates[1], targetCoord[2]-cartesianCoordinates[2]]
@@ -174,6 +173,7 @@ navigate(num){
             cursorMove(movementArr)
         }
     }
+    cartesianCoordinates := targetCoord
 }
 
 ; Handles moving the cursor via arrow key inputs the correct amount
@@ -182,6 +182,7 @@ navigate(num){
 cursorMove(movementArr){
     (movementArr[1] > 0) ? SendInput("{Right " Abs(movementArr[1]) "}") : SendInput("{Left " Abs(movementArr[1]) "}")
     (movementArr[2] > 0) ? SendInput("{Down " Abs(movementArr[2]) "}") : SendInput("{Up " Abs(movementArr[2]) "}")
+    ; ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 
 ; Function for updating cartesian coordinates that automatically wraps
