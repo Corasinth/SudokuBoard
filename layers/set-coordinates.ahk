@@ -5,8 +5,7 @@ u::setCoord(1)
 Numpad8::
 i::setCoord(2)
 Numpad9::
-o::
-setCoord(3)
+o::setCoord(3)
 
 Numpad4::
 j::setCoord(4)

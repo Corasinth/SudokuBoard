@@ -1,25 +1,42 @@
 #HotIf currentLayer = "Entry"
 ; ====================================== NINE-BY-NINE BLOCK =====================================
 Numpad1::
-u::1
+u::{
+    SendInput("1")
+}
 Numpad2::
-i::2
+i::{
+    SendInput("2")
+}
 Numpad3::
-o::3
+o::{
+    SendInput("3")
+}
 Numpad4::
-
-j::4
+j::{
+    SendInput("4")
+}
 Numpad5::
-k::5
+k::{
+    SendInput("5")
+}
 Numpad6::
-l::6
+l::{
+    SendInput("6")
+}
 
 Numpad7::
-m::7
+m::{
+    SendInput("7")
+}
 Numpad8::
-,::8
+,::{
+    SendInput("8")
+}
 Numpad9::
-.::9
+.::{
+    SendInput("9")
+}
 ; ====================================== ARROW NAV ======================================
 Right::
 d::coordUpdate("x", 1)

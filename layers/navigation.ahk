@@ -1,26 +1,26 @@
 #HotIf currentLayer = "Navigation"
 ; ====================================== NINE-BY-NINE BLOCK =====================================
 Numpad7::
-u::
+u::navigate(1)
 Numpad8::
-i::
+i::navigate(2)
 Numpad9::
-o::
+o::navigate(3)
 
 
 Numpad4::
-j::
+j::navigate(4)
 Numpad5::
-k::
+k::navigate(5)
 Numpad6::
-l::
+l::navigate(6)
 
 Numpad1::
-m::
+m::navigate(7)
 Numpad2::
-,::
+,::navigate(8)
 Numpad3::
-.::{}
+.::navigate(9)
 
 ; ====================================== ARROW NAV ======================================
 Right::
