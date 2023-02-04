@@ -3,6 +3,7 @@
 ; Sets absolute coordinates for tooltip
 CoordMode("ToolTip", "Screen")
 #Include ./util/ini-functions.ahk
+
 ; ============================== MAIN VARIABLES ==============================
 ; This is the tracker that determines the current layer
 ; Also the layer that k-plus starts up with
@@ -25,9 +26,6 @@ cartesianCoordinates := [0, 0]
 ; Array that tracks box coordinates for navigation and initial coordinate setting
 boxCoordinates := []
 
-; Whether or not to move cursor via mouse or arrow keys
-mouseMode := readMouseSettings("mouseMode")
-
 ; Universal quit and suspend key definitions go here
 ; Edit key defitions and input level as desired
 #InputLevel 2
@@ -36,6 +34,18 @@ mouseMode := readMouseSettings("mouseMode")
 ^!+s::Suspend(-1)
 Esc::ExitApp
 #SuspendExempt False
+
+; ============================== MOUSE MODE VARIABLES AND FUNCTIONS ==============================
+#Include ./util/mouse-calibration.ahk
+
+; Whether or not to move cursor via mouse or arrow keys
+mouseMode := readMouseSettings("mouseMode")
+
+topLeftCorner := readMouseSettings("")
+topRightCorner := readMouseSettings()
+
+bottomLeftCorner := readMouseSettings()
+bottomRightCorner := readMouseSettings()
 
 ; ============================== TOOLTIP HANDLING ==============================
 SuspendC := Suspend.GetMethod("Call")
@@ -82,6 +92,7 @@ toggleLayer(targetLayer) {
 ; ============================== UTILITY FUNCTIONS ==============================
 ; Function to toggle whether or not the script displays a tooltip, for use in layers
 tooltipToggle(){
+    global
     tooltipOn := tooltipOn ? 0 : 1
     if(tooltipOn){
         ToolTip(currentLayer, xCoordinate, yCoordinate)
@@ -92,6 +103,7 @@ tooltipToggle(){
 
 ; Simple function to toggle mouse mode on and off
 mouseModeToggle(){
+    global
     mouseMode := mouseMode ? 0 : 1
 }
 
@@ -187,11 +199,6 @@ cursorMove(movementArr){
     (movementArr[2] > 0) ? SendInput("{Down " Abs(movementArr[2]) "}") : SendInput("{Up " Abs(movementArr[2]) "}")
     ; ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
-
-; Function for updating cartesian coordinates that automatically wraps
-; Function for taking navigation requests, checking how many navigations have been receives since last cycle, and generating and executing appropriate arrow commands
-; This must also translate destination coordinates into cartesian coordinates, and assign inner box destination when using big box navigation only (which means translating cartesian to box, detrmining box coords, and translating back to cartesian
-; Perhaps functions for translating cartesian to box and box to cartesian
 
 ; ============================== INCLUDE HOTKEYS ==============================
 ; Ensures the input level is above the default for other scripts
