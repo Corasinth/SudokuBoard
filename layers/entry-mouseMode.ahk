@@ -1,26 +1,42 @@
-#HotIf (currentLayer = "Set-Coordinates" && mouseMode = 0)
+#HotIf (currentLayer = "Entry" && mouseMode = 1)
 ; ====================================== NINE-BY-NINE BLOCK =====================================
-Numpad7::
-u::setCoord(1)
-Numpad8::
-i::setCoord(2)
-Numpad9::
-o::setCoord(3)
-
-Numpad4::
-j::setCoord(4)
-Numpad5::
-k::setCoord(5)
-Numpad6::
-l::setCoord(6)
-
 Numpad1::
-m::setCoord(7)
+u::{
+    SendInput("1")
+}
 Numpad2::
-,::setCoord(8)
+i::{
+    SendInput("2")
+}
 Numpad3::
-.::setCoord(9)
+o::{
+    SendInput("3")
+}
+Numpad4::
+j::{
+    SendInput("4")
+}
+Numpad5::
+k::{
+    SendInput("5")
+}
+Numpad6::
+l::{
+    SendInput("6")
+}
 
+Numpad7::
+m::{
+    SendInput("7")
+}
+Numpad8::
+,::{
+    SendInput("8")
+}
+Numpad9::
+.::{
+    SendInput("9")
+}
 ; ====================================== ARROW NAV ======================================
 Right::
 d::coordUpdate("x", 1)
@@ -37,4 +53,4 @@ s::coordUpdate("y", 1)
 NumpadAdd::
 CapsLock::toggleLayer("Navigation")
 Numpad0::
-f::toggleLayer("Entry")
+f::toggleLayer("Set-Coordinates")

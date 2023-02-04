@@ -1,4 +1,4 @@
-#HotIf currentLayer = "Navigation"
+#HotIf (currentLayer = "Navigation" mouseMode = 0)
 ; ====================================== NINE-BY-NINE BLOCK =====================================
 Numpad7::
 u::navigate(1)
