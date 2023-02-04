@@ -113,13 +113,13 @@ boxToCartesian(coordArr){
 ; Set starting coordinates by monitoring the box array, and once it fills up setting the cartesian coordinates accordingly
 setCoord(num){
     global
-    if (boxCoordinates.length >= 2){
-        boxCoordinates := []
-    }
     boxCoordinates.Push(num)
     if (boxCoordinates.length = 2){
         cartesianCoordinates := boxToCartesian([boxCoordinates[1], boxCoordinates[2]])
         toggleLayer("Entry")
+    }
+    if (boxCoordinates.length = 2){
+        boxCoordinates := []
     }
 }
 
@@ -147,10 +147,6 @@ coordUpdate(xOrY, movement){
 ; The idea is that upon entering the big box key, the cursor immediately navigates to that large box in that relative position, navigating to the smaller box only on a second press
 navigate(num){
     global
-    if (boxCoordinates.length >= 2){
-        boxCoordinates := []
-    }
-
     boxCoordinates.Push(num)
 
     if (boxCoordinates.length = 1){
@@ -172,6 +168,7 @@ navigate(num){
         } else {
             cursorMove(movementArr)
         }
+        boxCoordinates := []
     }
     cartesianCoordinates := targetCoord
 }
