@@ -30,7 +30,7 @@ boxCoordinates := []
 #SuspendExempt True
 ; The suspend shortcut also disables the tooltip if it was active, though the tooltip remains if suspended via the GUI
 ^!+s::Suspend(-1)
-^!+q::ExitApp
+Esc::ExitApp
 #SuspendExempt False
 
 ; ============================== TOOLTIP HANDLING ==============================
@@ -68,6 +68,8 @@ if(tooltipOn){
 ; ============================== TOGGLE LAYERS ==============================
 toggleLayer(targetLayer) {
     global
+    currentLayer := targetLayer
+
     if(tooltipOn){
         Tooltip(currentLayer, xCoordinate, yCoordinate)
     }
@@ -86,15 +88,16 @@ tooltipToggle(){
 
 ; These two functions handle conversion between the two kinds of coordinate systems
 ; For now, only the equation for calculating the little box is needed, but I'm leaving the big box calcuation here in case it's needed
+; Round is nessecary to make sure the result is a simple integer, without any decimal places
 cartesianToBox(x, y){
-    ; a := Ceil(x/rootSqrSize) + ((Ceil(y/rootSqrSize)-1)*3)
-    b := (Mod((x-1), rootSqrSize)) + ((Mod((y-1), rootSqrSize)*rootSqrSize)+1)
+    ; a := Round(Ceil(x/rootSqrSize) + ((Ceil(y/rootSqrSize)-1)*3))
+    b := Round((Mod((x-1), rootSqrSize)) + ((Mod((y-1), rootSqrSize)*rootSqrSize)+1))
     Return b
 }
 
 boxToCartesian(a, b){
-    x := (Mod((a-1), rootSqrSize)*3) + (Mod((b-1), rootSqrSize)+1)
-    y := (a-(Mod((a-1), rootSqrSize))) + (Ceil(b/3)-1)
+    x := Round((Mod((a-1), rootSqrSize)*3) + (Mod((b-1), rootSqrSize)+1))
+    y := Round((a-(Mod((a-1), rootSqrSize))) + (Ceil(b/3)-1))
     Return [x, y]
 }
 
@@ -109,6 +112,7 @@ setCoord(num){
         cartesianCoordinates := boxToCartesian(boxCoordinates[1], boxCoordinates[2])
         toggleLayer("Entry")
     }
+    ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 
 ; This function handles updating the coordinates when using the arrow keys/WASD, and then sending the appropriate cursor instructions
@@ -122,11 +126,13 @@ coordUpdate(xOrY, movement){
         ; If the updated coordinates are at the maximum, the equation results in 0. Since this reads as false, they default to the maximum square size
         cartesianCoordinates[1] := Mod((cartesianCoordinates[1] + movement), sqrSize) || sqrSize
         difference := cartesianCoordinates[1] - oldX
+        ; MsgBox(difference)
         cursorMove(difference, 0)
     } else if (xOrY = "y"){
-        oldY:= cartesianCoordinates[2]
-        cartesianCoordinates[1] := Mod((cartesianCoordinates[2] + movement), sqrSize) || sqrSize
-        difference := cartesianCoordinates[1] - oldX
+        oldY := cartesianCoordinates[2]
+        cartesianCoordinates[2] := Mod((cartesianCoordinates[2] + movement), sqrSize) || sqrSize
+        difference := cartesianCoordinates[2] - oldY
+        ; MsgBox(difference)
         cursorMove(0, difference)
     }
 }
@@ -135,8 +141,9 @@ coordUpdate(xOrY, movement){
 ; Parameters come in either negative or positive; the sign indicates the direction and the Absolute() function detrmines the distance of the movement
 ; The distance can be 0, letting the function move the cursor in just one direction
 cursorMove(x, y){
-    x > 0 ? SendInput("{Right " Abs(x) "}") : SendInput("{Left " Abs(x) "}")
-    y > 0 ? SendInput("{Down " Abs(y) "}") : SendInput("Up" Abs(y) "}")
+    (x > 0) ? SendInput("{Right " Abs(x) "}") : SendInput("{Left " Abs(x) "}")
+    (y > 0) ? SendInput("{Down " Abs(y) "}") : SendInput("{Up " Abs(y) "}")
+    ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 
 ; Function for updating cartesian coordinates that automatically wraps
