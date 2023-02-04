@@ -26,7 +26,7 @@ cartesianCoordinates := [0, 0]
 boxCoordinates := []
 
 ; Whether or not to move cursor via mouse or arrow keys
-mouseMode := 0
+mouseMode := readMouseSettings("mouseMode")
 
 ; Universal quit and suspend key definitions go here
 ; Edit key defitions and input level as desired
@@ -88,6 +88,11 @@ tooltipToggle(){
     } else {
         ToolTip()
     }
+}
+
+; Simple function to toggle mouse mode on and off
+mouseModeToggle(){
+    mouseMode := mouseMode ? 0 : 1
 }
 
 ; These two functions handle conversion between the two kinds of coordinate systems
