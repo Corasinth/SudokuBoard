@@ -204,7 +204,11 @@ cursorMove(movementArr){
 ; Ensures the input level is above the default for other scripts
 #InputLevel 1
 ; Include master file of layers. This file contains nothing but #Include commands for the rest of the config files
-#Include ./layers/entry.ahk
-#Include ./layers/navigation.ahk
-#Include ./layers/set-coordinates.ahk
+#Include ./layers/calibration.ahk
+#Include ./layers/layers-9x9/entry.ahk
+#Include ./layers/layers-9x9/navigation.ahk
+#Include ./layers/layers-9x9/set-coordinates.ahk
+#Include ./layers/layers-9x9/entry-mouseMode.ahk
+#Include ./layers/layers-9x9/navigation-mouseMode.ahk
+#Include ./layers/layers-9x9/set-coordinates-mouseMode.ahk
 #HotIf
