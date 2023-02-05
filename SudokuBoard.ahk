@@ -31,7 +31,8 @@ boxCoordinates := []
 #InputLevel 2
 #SuspendExempt True
 ; The suspend shortcut also disables the tooltip if it was active, though the tooltip remains if suspended via the GUI
-^!+m::mouseCalibration()
+^!+c::mouseCalibration()
+^!+m::mouseModeToggle()
 ^!+s::Suspend(-1)
 Esc::ExitApp
 #SuspendExempt False
