@@ -6,8 +6,9 @@ readMouseSettings(theKey){
     Return IniRead("./settings.ini", "Mouse Mode Settings", theKey)
 }
 
-saveCalibrationSettings(startPosition, xOffset, yOffset){
-    IniWrite(startPosition, "./settings.ini", "Mouse Mode Settings", "startPosition")
+saveCalibrationSettings(startPositionX, startPositionY xOffset, yOffset){
+    IniWrite(startPosition, "./settings.ini", "Mouse Mode Settings", "startPositionX")
+    IniWrite(startPosition, "./settings.ini", "Mouse Mode Settings", "startPositionY")
     IniWrite(xOffset, "./settings.ini", "Mouse Mode Settings", "xOffset")
     IniWrite(yOffset, "./settings.ini", "Mouse Mode Settings", "yOffset")
 }

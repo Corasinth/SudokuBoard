@@ -2,6 +2,7 @@
 #SingleInstance Force
 ; Sets absolute coordinates for tooltip
 CoordMode("ToolTip", "Screen")
+CoordMode("Mouse", "Screen")
 #Include ./util/ini-functions.ahk
 
 ; ============================== MAIN VARIABLES ==============================
@@ -43,7 +44,8 @@ Esc::ExitApp
 ; Whether or not to move cursor via mouse or arrow keys
 mouseMode := readMouseSettings("mouseMode")
 
-startPosition := readMouseSettings("startPosition") || 0 
+startPositionX := readMouseSettings("startPositionX") || 0 
+startPositionY := readMouseSettings("startPositionY") || 0 
 xOffset := readMouseSettings("xOffset") || 0
 yOffset := readMouseSettings("yOffset") || 0 
 
@@ -172,7 +174,7 @@ navigate(num){
         ; The difference is calculated as new vs old then sent to the appropriate movement function
         movementArr := [targetCoord[1]-cartesianCoordinates[1], targetCoord[2]-cartesianCoordinates[2]]
         if (mouseMode){
-            ; mouseMove(movementArr)
+            mouseMove(targetCoord)
         } else {
             cursorMove(movementArr)
         }
@@ -181,7 +183,7 @@ navigate(num){
         targetCoord := boxToCartesian(boxCoordinates)
         movementArr := [targetCoord[1]-cartesianCoordinates[1], targetCoord[2]-cartesianCoordinates[2]]
         if (mouseMode){
-            ; mouseMove(movementArr)
+            mouseMove(targetCoord)
         } else {
             cursorMove(movementArr)
         }
@@ -196,6 +198,13 @@ navigate(num){
 cursorMove(movementArr){
     (movementArr[1] > 0) ? SendInput("{Right " Abs(movementArr[1]) "}") : SendInput("{Left " Abs(movementArr[1]) "}")
     (movementArr[2] > 0) ? SendInput("{Down " Abs(movementArr[2]) "}") : SendInput("{Up " Abs(movementArr[2]) "}")
+    ; ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
+}
+
+mouseMove(targetCoord){
+    global
+    ; Formula for calculating the screen coordinates based on the starting position, the offsets, and the cartesian coordinates; the one at the end is the number of clicks
+    Click((startPositionX + (targetCoord[1] * xOffset)) " " (startPositionY + (targetCoord[2] * yOffset)) " 1")
     ; ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 
