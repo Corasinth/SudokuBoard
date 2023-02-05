@@ -10,12 +10,17 @@ mouseCalibration(){
     bottomLeft := ""
     bottomRight := ""
 
-    tooltipText := "Please click on the top left (🡠) corner of the sudoku grid."
-    SetTimer(checkPosition, 20)
 
+    instructionsGui := Gui()
+
+    tooltipText := "Please click on the top left (🡠) corner of the sudoku grid."
     tooltipText := "Please click on the top right (🡢) corner of the sudoku grid."
     tooltipText := "Please click on the bottom left (🡠) corner of the sudoku grid."
     tooltipText := "Please click on the bottom right (🡢) corner of the sudoku grid."
+
+    SetTimer(checkPosition, 20)
+
+    ; tickingTooltip(8)
 
     tickingTooltip("6", -1)
     tickingTooltip("5", -1000)
@@ -24,7 +29,21 @@ mouseCalibration(){
     tickingTooltip("2", -4000)
     tickingTooltip("1", -5000)
     tickingTooltip("0", -6000)
+
 }
+
+; tickingTooltip(countdownFrom){
+;     global
+;     Loop countdownFrom {
+;         secondsRemaining := countdownFrom - A_Index
+;         timer := A_Index * -1000
+;         if(secondsRemaining = 0){
+;             SetTimer(closeToolTip, timer)
+;         }
+;         SetTimer(() => tooltipText := "This tooltip will shut off in " secondsRemaining " seconds.", timer)
+;         ; SetTimer(() => MsgBox("sttt"), timer)
+;     }
+; }
 
 tickingTooltip(secondsRemaining, timer){
     global
@@ -33,12 +52,12 @@ tickingTooltip(secondsRemaining, timer){
 
 checkPosition(){
     MouseGetPos(&xx, &yy)
-    ToolTip(tooltipText " Current Coordinates: " xx ", " yy)
+    ToolTip(tooltipText " Current Coordinates: " xx ", " yy,,,2)
 }
 
 closeToolTip(){
     SetTimer(checkPosition, 0)
-    ToolTip()
+    Tooltip(,,,2)
 }
 
 mouseCalibration()
