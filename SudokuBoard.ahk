@@ -2,7 +2,6 @@
 #SingleInstance Force
 ; Sets absolute coordinates for tooltip
 CoordMode("ToolTip", "Screen")
-CoordMode("Mouse", "Screen")
 #Include ./util/ini-functions.ahk
 
 ; ============================== MAIN VARIABLES ==============================
@@ -204,7 +203,6 @@ cursorMove(movementArr){
 ; Ensures the input level is above the default for other scripts
 #InputLevel 1
 ; Include master file of layers. This file contains nothing but #Include commands for the rest of the config files
-#Include ./layers/calibration.ahk
 #Include ./layers/layers-9x9/entry.ahk
 #Include ./layers/layers-9x9/navigation.ahk
 #Include ./layers/layers-9x9/set-coordinates.ahk
