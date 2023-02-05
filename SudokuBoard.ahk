@@ -41,11 +41,9 @@ Esc::ExitApp
 ; Whether or not to move cursor via mouse or arrow keys
 mouseMode := readMouseSettings("mouseMode")
 
-topLeftCorner := readMouseSettings("topLeftCorner") || 0
-topRightCorner := readMouseSettings("topRightCorner") || 0
-
-bottomLeftCorner := readMouseSettings("bottomLeftCorner") || 0
-bottomRightCorner := readMouseSettings("bottomRightCorner") || 0
+startPosition := readMouseSettings("startPosition") || 0 
+xOffset := readMouseSettings("xOffset") || 0
+yOffset := readMouseSettings("yOffset") || 0 
 
 ; ============================== TOOLTIP HANDLING ==============================
 SuspendC := Suspend.GetMethod("Call")
