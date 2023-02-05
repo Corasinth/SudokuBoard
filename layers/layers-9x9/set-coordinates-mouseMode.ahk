@@ -23,16 +23,28 @@ Numpad3::
 
 ; ====================================== ARROW NAV ======================================
 Right::
-d::coordUpdate("x", 1)
+d::{
+    coordUpdate("x", 1)
+    toggleLayer("Entry")
+}
 
 Left::
-a::coordUpdate("x", -1)
+a::{
+    coordUpdate("x", -1)
+    toggleLayer("Entry")
+}
 
 Up::
-w::coordUpdate("y", -1)
+w::{
+    coordUpdate("y", -1)
+    toggleLayer("Entry")
+}
 
 Down::
-s::coordUpdate("y", 1)
+s::{
+    coordUpdate("y", 1)
+    toggleLayer("Entry")
+}
 ; ====================================== BACKSPACE/DELETE ======================================
 NumpadDiv::
 q::SendInput("{Backspace}")
