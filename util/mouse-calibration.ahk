@@ -10,9 +10,12 @@ mouseCalibration(){
     bottomLeft := ""
     bottomRight := ""
 
-
-    instructionsGui := Gui()
-
+    mouseCalText := "Welcome to the SudokuBoard mouse calibration!`n`nMouse calibration is important for mouse mode, where the navigation keys move the mouse around, rather than the cursor.`n`nTo calibrate your mouse, you'll need to click the four corners of the sudoku grid in the following order: top left (🡠), top right (🡢), bottom left (🡠), and bottom right (🡢).`n`nIt is important to position the puzzle as desired before continuing; if it is not please cancel calibration and adjust the puzzle appropriately. Otherwise, you will experiance inputs in unexpected places.`n`nIf you experiance troubles with mouse mode, try recalibrating.`n`nFor those who wish to be precise, the arrow and WASD keys will move the cursor one pixel in the appropiate direction during calibration, but extreme accuracy is not required for successful calibration.`n`nClick 'OK' to continue with mouse calibration, or 'Cancel' if you don't wish to proceed."
+    result := MsgBox(mouseCalText, "Mouse Calibration", "OKCancel")
+    if (result = "Cancel"){
+        ; toggleLayer("Entry")
+        Return
+    }
     tooltipText := "Please click on the top left (🡠) corner of the sudoku grid."
     tooltipText := "Please click on the top right (🡢) corner of the sudoku grid."
     tooltipText := "Please click on the bottom left (🡠) corner of the sudoku grid."
