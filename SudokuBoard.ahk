@@ -2,6 +2,7 @@
 #SingleInstance Force
 ; Sets absolute coordinates for tooltip
 CoordMode("ToolTip", "Screen")
+CoordMode("Mouse", "Screen")
 #Include ./util/ini-functions.ahk
 
 ; ============================== MAIN VARIABLES ==============================
@@ -103,7 +104,6 @@ tooltipToggle(){
 
 ; Simple function to toggle mouse mode on and off
 mouseModeToggle(){
-    global
     mouseMode := mouseMode ? 0 : 1
 }
 
