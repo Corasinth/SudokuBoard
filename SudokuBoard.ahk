@@ -42,12 +42,17 @@ Esc::ExitApp
 #Include ./util/mouse-calibration.ahk
 
 ; Whether or not to move cursor via mouse or arrow keys
-mouseMode := readMouseSettings("mouseMode")
+mouseMode := readMouseSettings("mouseMode") || 0
 
 startPositionX := readMouseSettings("startPositionX") || 0 
 startPositionY := readMouseSettings("startPositionY") || 0 
 xOffset := readMouseSettings("xOffset") || 0
 yOffset := readMouseSettings("yOffset") || 0 
+
+; If the proper values don't exist, automatically trigger mouse calibration when trying to switch to mouse mode
+if(mouseMode && !(startPositionX && startPositionY && xOffset && yOffset)){
+    mouseCalibration()
+}
 
 ; ============================== TOOLTIP HANDLING ==============================
 SuspendC := Suspend.GetMethod("Call")
@@ -106,6 +111,10 @@ tooltipToggle(){
 ; Simple function to toggle mouse mode on and off
 mouseModeToggle(){
     mouseMode := mouseMode ? 0 : 1
+    ; If the proper values don't exist, automatically trigger mouse calibration when trying to switch to mouse mode
+    if(mouseMode && !(startPositionX && startPositionY && xOffset && yOffset)){
+        mouseCalibration()
+    }
 }
 
 ; These two functions handle conversion between the two kinds of coordinate systems
