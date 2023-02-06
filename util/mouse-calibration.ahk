@@ -27,35 +27,24 @@ mouseCalibration(){
     ; Displays coordinates in a tooltip for those who like the precision
     SetTimer(checkPosition, 20)
     ; Calibration layer holds the hotkey that saves mouse coordinates to the relevant array on click
-    toggleLayer("Calibration")
+    ; toggleLayer("Calibration")
 
     tooltipText := "Please click on the top right (🡢) corner of the sudoku grid."
     tooltipText := "Please click on the bottom left (🡠) corner of the sudoku grid."
     tooltipText := "Please click on the bottom right (🡢) corner of the sudoku grid."
 
-    postCalText := "Mouse calibration completed!`n`nYou have entered the following coordinates: `n`n(" sudokuCoordinates[1][1] ", " sudokuCoordinates[1][2] ")  (" sudokuCoordinates[2][1] ", " sudokuCoordinates[2][2] ")`n`n(" sudokuCoordinates[3][1] ", " sudokuCoordinates[3][2] ")  (" sudokuCoordinates[4][1] ", " sudokuCoordinates[4][2] ")`n`nIf these are acceptable, click continue. If you wish to recalibrate, click Try Again. If you wish to abort calibration, click cancel.`n`nFinally, if you want to save this calibration as the default, check the box below.`n`nWARNING! This will overwrite the current settings. If you wish to save your current settings, you must make the appropriate arrangements to save those."
-
-    ; tickingTooltip(8)
-
-    tickingTooltip("6", -1)
-    tickingTooltip("5", -1000)
-    tickingTooltip("4", -2000)
-    tickingTooltip("3", -3000)
-    tickingTooltip("2", -4000)
-    tickingTooltip("1", -5000)
-    tickingTooltip("0", -6000)
-    SetTimer(closeToolTip, -6000)
-
-
-
-
-    result := MsgBox(postCalText, "Mouse Calibration Complete", "CancelTryAgainContinue")
-
     ; Not strictly necessary, but splitting up the coordinates into seperate variables makes them easier to do calculations on
-    topLeftCorner := sudokuCoordinates[1]
-    topRightCorner := sudokuCoordinates[2]
-    bottomLeftCorner := sudokuCoordinates[3]
-    bottomRightCorner := sudokuCoordinates[4]
+    ; topLeftCorner := sudokuCoordinates[1]
+    ; topRightCorner := sudokuCoordinates[2]
+    ; bottomLeftCorner := sudokuCoordinates[3]
+    ; bottomRightCorner := sudokuCoordinates[4]
+
+    ; postCalText := "Mouse calibration completed!`n`nYou have entered the following coordinates: `n`n(" topLeftCorner[1] ", " topLeftCorner[2] ")  (" topRightCorner[1] ", " topRightCorner[2] ")`n`n(" bottomLeftCorner[1] ", " bottomLeftCorner[2] ")  (" bottomRightCorner[1] ", " bottomRightCorner[2] ")`n`nIf these are acceptable, click continue. If you wish to recalibrate, click Try Again. If you wish to abort calibration, click cancel.`n`nFinally, if you want to save this calibration as the default, check the box below.`n`nWARNING! This will overwrite the current settings. If you wish to save your current settings, you must make the appropriate arrangements to save those."
+
+    tickingTooltip(8)
+
+    ; result := MsgBox(postCalText, "Mouse Calibration Complete", "CancelTryAgainContinue")
+
 
     ; Reset the sudokuCoordinates regardless of the result of the dialogue box
     sudokuCoordinates := []
@@ -90,22 +79,19 @@ mouseCalibration(){
 
 }
 
-; tickingTooltip(countdownFrom){
-;     global
-;     Loop countdownFrom {
-;         secondsRemaining := countdownFrom - A_Index
-;         timer := A_Index * -1000
-;         if(secondsRemaining = 0){
-;             SetTimer(closeToolTip, timer)
-;         }
-;         SetTimer(() => tooltipText := "This tooltip will shut off in " secondsRemaining " seconds.", timer)
-;         ; SetTimer(() => MsgBox("sttt"), timer)
-;     }
-; }
-
-tickingTooltip(secondsRemaining, timer){
+tickingTooltip(countdownFrom){
     global
-    SetTimer(() => tooltipText := "Received coordinates " bottomRight "This tooltip will shut off in " secondsRemaining " seconds.", timer)
+    Loop countdownFrom {
+        secondsRemaining := countdownFrom - A_Index
+        timer := A_Index * -1000
+        if(secondsRemaining = 0){
+            SetTimer(closeToolTip, timer)
+        }
+        timerFunc(secondsRemaining, timer){
+            SetTimer(() => tooltipText := "This tooltip will shut off in " secondsRemaining " seconds.", timer)
+        }
+        timerFunc(secondsRemaining, timer)
+    }
 }
 
 checkPosition(){
