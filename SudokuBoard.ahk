@@ -44,6 +44,7 @@ Esc::ExitApp
 ; Whether or not to move cursor via mouse or arrow keys
 mouseMode := readMouseSettings("mouseMode") || 0
 
+; Values for mouse position calculation
 startPositionX := readMouseSettings("startPositionX") || 0 
 startPositionY := readMouseSettings("startPositionY") || 0 
 xOffset := readMouseSettings("xOffset") || 0
@@ -213,7 +214,7 @@ cursorMove(movementArr){
 mouseMove(targetCoord){
     global
     ; Formula for calculating the screen coordinates based on the starting position, the offsets, and the cartesian coordinates; the one at the end is the number of clicks
-    Click((startPositionX + (targetCoord[1] * xOffset)) " " (startPositionY + (targetCoord[2] * yOffset)) " 1")
+    Click((startPositionX + ((targetCoord[1] - 1) * xOffset)) " " (startPositionY + ((targetCoord[2]-1) * yOffset)) " 1")
     ; ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 
