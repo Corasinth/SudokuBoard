@@ -1,8 +1,10 @@
 #HotIf currentLayer = "Calibration"
 ; ====================================== CALIBRATION ======================================
 LButton::{
+    global
     MouseGetPos(&XC, &YC)
     sudokuCoordinates.Push([XC, YC])
+    clickCounter++
 }
 ; ====================================== ARROW NAV ======================================
 Right::
