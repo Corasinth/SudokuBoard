@@ -8,6 +8,7 @@ toggleLayer(target){
     global
     currentLayer := target
 }
+sqrSize := 9
 
 mouseCalibration(){
     global
@@ -23,23 +24,23 @@ mouseCalibration(){
         Return
     }
 
-    tooltipText := "Please click on the top left (🡠) corner of the sudoku grid."
+    tooltipText := "Please click on the top left (🡠)  of the sudoku grid."
     ; Displays coordinates in a tooltip for those who like the precision
     SetTimer(checkPosition, 20)
     ; Calibration layer holds the hotkey that saves mouse coordinates to the relevant array on click
     ; toggleLayer("Calibration")
 
-    tooltipText := "Please click on the top right (🡢) corner of the sudoku grid."
-    tooltipText := "Please click on the bottom left (🡠) corner of the sudoku grid."
-    tooltipText := "Please click on the bottom right (🡢) corner of the sudoku grid."
+    tooltipText := "Please click on the top right (🡢)  of the sudoku grid."
+    tooltipText := "Please click on the bottom left (🡠)  of the sudoku grid."
+    tooltipText := "Please click on the bottom right (🡢)  of the sudoku grid."
 
     ; Not strictly necessary, but splitting up the coordinates into seperate variables makes them easier to do calculations on
-    ; topLeftCorner := sudokuCoordinates[1]
-    ; topRightCorner := sudokuCoordinates[2]
-    ; bottomLeftCorner := sudokuCoordinates[3]
-    ; bottomRightCorner := sudokuCoordinates[4]
+    ; topLeft := sudokuCoordinates[1]
+    ; topRight := sudokuCoordinates[2]
+    ; bottomLeft := sudokuCoordinates[3]
+    ; bottomRight := sudokuCoordinates[4]
 
-    ; postCalText := "Mouse calibration completed!`n`nYou have entered the following coordinates: `n`n(" topLeftCorner[1] ", " topLeftCorner[2] ")  (" topRightCorner[1] ", " topRightCorner[2] ")`n`n(" bottomLeftCorner[1] ", " bottomLeftCorner[2] ")  (" bottomRightCorner[1] ", " bottomRightCorner[2] ")`n`nIf these are acceptable, click continue. If you wish to recalibrate, click Try Again. If you wish to abort calibration, click cancel.`n`nFinally, if you want to save this calibration as the default, check the box below.`n`nWARNING! This will overwrite the current settings. If you wish to save your current settings, you must make the appropriate arrangements to save those."
+    ; postCalText := "Mouse calibration completed!`n`nYou have entered the following coordinates: `n`n(" topLeft[1] ", " topLeft[2] ")  (" topRight[1] ", " topRight[2] ")`n`n(" bottomLeft[1] ", " bottomLeft[2] ")  (" bottomRight[1] ", " bottomRight[2] ")`n`nIf these are acceptable, click continue. If you wish to recalibrate, click Try Again. If you wish to abort calibration, click cancel.`n`nFinally, if you want to save this calibration as the default, check the box below.`n`nWARNING! This will overwrite the current settings. If you wish to save your current settings, you must make the appropriate arrangements to save those before clicking Continue."
 
     tickingTooltip(8)
 
@@ -63,6 +64,15 @@ mouseCalibration(){
 
 
     ; Processing of coordinates goes here
+    ; avgWidth := ((topRight[1] - topLeft[1]) + (bottomRight[1] - bottomLeft[1]))/2
+    ; avgHeight := ((topLeft[2] - bottomLeft[2]) + (topRight[2] - bottomRight[2]))/2
+
+    ; xOffset := avgWidth / sqrSize
+    ; yOffset := avgHeight / sqrSize
+
+    ; ; The start position is to the right side of a cell and halfway down
+    ; startPositionX := Round(topLeft[1] + (.75 * xOffset))
+    ; startPositionY := Round(topLeft[2] + (.5 * yOffset))
 
     ; Set appopriate variables
     ; startPositionX := 0 
