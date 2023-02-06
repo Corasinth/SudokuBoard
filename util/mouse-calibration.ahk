@@ -16,7 +16,6 @@ mouseCalibration(){
 
     ; Text for dialogue boxes
     mouseCalText := "Welcome to the SudokuBoard mouse calibration!`n`nMouse calibration is important for mouse mode, where the navigation keys move the mouse around, rather than the cursor.`n`nTo calibrate your mouse, you'll need to click the four corners of the sudoku grid in the following order: top left (🡠), top right (🡢), bottom left (🡠), and bottom right (🡢).`n`nIt is important to position the puzzle as desired before continuing; if it is not please cancel calibration and adjust the puzzle appropriately. Otherwise, you will experiance inputs in unexpected places.`n`nIf you experiance troubles with mouse mode, try recalibrating.`n`nFor those who wish to be precise, the arrow and WASD keys will move the cursor one pixel in the appropiate direction during calibration, but extreme accuracy is not required for successful calibration.`n`nClick 'OK' to continue with mouse calibration, or 'Cancel' if you don't wish to proceed."
-    postCalText := "Mouse calibration completed!`n`nYou have entered the following coordinates: `n`nIf these are acceptable, click continue. If you wish to recalibrate, click Try Again. If you wish to abort calibration, click cancel.`n`nFinally, if you want to save this calibration as the default, check the box below.`n`nWARNING! This will overwrite the current settings. If you wish to save your current settings, you must make the appropriate arrangements to save those."
 
     result := MsgBox(mouseCalText, "Mouse Calibration", "OKCancel")
     if (result = "Cancel"){
@@ -33,6 +32,8 @@ mouseCalibration(){
     tooltipText := "Please click on the top right (🡢) corner of the sudoku grid."
     tooltipText := "Please click on the bottom left (🡠) corner of the sudoku grid."
     tooltipText := "Please click on the bottom right (🡢) corner of the sudoku grid."
+
+    postCalText := "Mouse calibration completed!`n`nYou have entered the following coordinates: `n`n(" sudokuCoordinates[1][1] ", " sudokuCoordinates[1][2] ")  (" sudokuCoordinates[2][1] ", " sudokuCoordinates[2][2] ")`n`n(" sudokuCoordinates[3][1] ", " sudokuCoordinates[3][2] ")  (" sudokuCoordinates[4][1] ", " sudokuCoordinates[4][2] ")`n`nIf these are acceptable, click continue. If you wish to recalibrate, click Try Again. If you wish to abort calibration, click cancel.`n`nFinally, if you want to save this calibration as the default, check the box below.`n`nWARNING! This will overwrite the current settings. If you wish to save your current settings, you must make the appropriate arrangements to save those."
 
     ; tickingTooltip(8)
 
@@ -67,12 +68,23 @@ mouseCalibration(){
         toggleLayer("Entry")
         mouseCalibration()
     }
+    ; Update finished text to include coordinates
+    ; Make tooltips cycle
+    ; Update tooltip script
+
 
     ; Processing of coordinates goes here
 
     ; Set appopriate variables
+    ; startPositionX := 0 
+    ; startPositionY := 0 
+    ; xOffset := 0
+    ; yOffset := 0 
+
+    ; Update dialogue boxes to gui
 
     ; Save to ini file if relevant
+    ; saveCalibrationSettings(startPosition, xOffset, yOffset)
 
     ; toggleLayer("Entry")
 
