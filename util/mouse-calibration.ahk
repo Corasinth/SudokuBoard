@@ -10,6 +10,18 @@ toggleLayer(target){
 }
 sqrSize := 9
 
+xOffset := 1
+yOffset := 1
+startPositionX := 1
+startPositionY := 1
+
+saveCalibrationSettings(startPositionX, startPositionY, xOffset, yOffset){
+    IniWrite(startPositionX, "../settings.ini", "Mouse Mode Settings", "startPositionX")
+    IniWrite(startPositionY, "../settings.ini", "Mouse Mode Settings", "startPositionY")
+    IniWrite(xOffset, "../settings.ini", "Mouse Mode Settings", "xOffset")
+    IniWrite(yOffset, "../settings.ini", "Mouse Mode Settings", "yOffset")
+}
+
 mouseCalibration(){
     global
     ; Stores coordinates gained from left click
@@ -58,18 +70,27 @@ mouseCalibration(){
     ; Text for post cal gui
     postCalText := "Mouse calibration completed!`n`nYou have entered the following coordinates: `n`n(" topLeft[1] ", " topLeft[2] ") (" topRight[1] ", " topRight[2] ")`n`n(" bottomLeft[1] ", " bottomLeft[2] ") (" bottomRight[1] ", " bottomRight[2] ")`n`nIf these are acceptable, click Finish.`n`nClicking Recalibrate will restart the process, but save the previous data.`n`nIf you wish to abort calibration and discard the results, click Abort.`n`nFinally, if you want to save this calibration as the default, check the box below.`n`nWARNING! This will overwrite the current settings if checked, even if you abort calibration.`n`nIf you wish to save your current settings, you must make arrangements to save those first."
 
-    ; result := MsgBox(postCalText, "Mouse Calibration Complete", "CancelTryAgainContinue")
-
     postCal := Gui(,"Mouse Calibration Complete")
     postCal.SetFont("S10")
     postCal.Add("Text",, postCalText)
-    finishButton := postCal.Add("Button","Default xp+140 yp+330","Finish")
-    recalibrateButton := postCal.Add("Button", "xp+70","Recalibrate")
-    abortButton:= postCal.Add("Button","xp+100","Abort")
-    saveAsDefault := postCal.Add("Checkbox", "vsaveAsDefault", "Save calibration as default")
-    saveAsDefault.Move("180", "375  ")
-    postCal.Show("W600")
 
+    finishButton := postCal.Add("Button","Default xp+140 yp+330","Finish")
+    finishButton.OnEvent("Click", finishButtonFunc)
+
+    recalibrateButton := postCal.Add("Button", "xp+70","Recalibrate")
+    recalibrateButton.OnEvent("Click", recalibrateButtonFunc)
+
+    abortButton:= postCal.Add("Button","xp+100","Abort")
+    abortButton.OnEvent("Click", abortButtonFunc)
+
+    saveAsDefault := postCal.Add("Checkbox", "vsaveAsDefault", "Save calibration as default")
+    saveAsDefault.Move("180", "375 ")
+
+    postCal.Show("W600")
+}
+
+processCoordinates(){
+    global
     ; Process coordinates into the start position and offsets
     avgWidth := ((topRight[1] - topLeft[1]) + (bottomRight[1] - bottomLeft[1]))/2
     avgHeight := ((bottomLeft[2] - topLeft[2]) + (bottomRight[2] - topRight[2]))/2
@@ -80,21 +101,38 @@ mouseCalibration(){
     ; The start position is to the right side of a cell and halfway down
     startPositionX := Round(topLeft[1] + (.75 * xOffset))
     startPositionY := Round(topLeft[2] + (.5 * yOffset))
-
-    if (result = "Cancel"){
-        Return
-    }
-    if (result = "TryAgain"){
-        toggleLayer("Entry")
-        mouseCalibration()
-    }
-
-    ; Save to ini file if relevant
-    ; if(0){
-    ;     saveCalibrationSettings(startPositionX, startPositionY, xOffset, yOffset)
-    ; }
 }
 
+mouseCalibration()
+
+; ============================== GUI FUNCTIONS ==============================
+finishButtonFunc(*){
+    global
+    processCoordinates()
+    if(saveAsDefault.Value){
+        saveCalibrationSettings(startPositionX, startPositionY, xOffset, yOffset)
+    }
+    postCal.Destroy()
+}
+
+recalibrateButtonFunc(*){
+    global
+    processCoordinates()
+    if(saveAsDefault.Value){
+        saveCalibrationSettings(startPositionX, startPositionY, xOffset, yOffset)
+    }
+    postCal.Destroy()
+    mouseCalibration()
+}
+
+abortButtonFunc(*){
+    global
+    postCal.Destroy()
+    ExitApp
+}
+
+; ============================== TOOLTIP FUNCTIONS ==============================
+; Updates the timer
 tickingTooltip(countdownFrom){
     global
     Loop countdownFrom {
@@ -127,5 +165,3 @@ closeToolTip(){
     SetTimer(checkPosition, 0)
     Tooltip(,,,2)
 }
-
-mouseCalibration()
