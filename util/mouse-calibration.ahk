@@ -33,7 +33,6 @@ mouseCalibration(){
         Return
     }
 
-
     ; Displays coordinates in a tooltip for those who like the precision
     SetTimer(checkPosition, 20)
 
@@ -53,24 +52,23 @@ mouseCalibration(){
     bottomLeft := sudokuCoordinates[3]
     bottomRight := sudokuCoordinates[4]
 
-    ; Text for post cal gui
-    postCalText := "Mouse calibration completed!`n`nYou have entered the following coordinates: `n`n(" topLeft[1] ", " topLeft[2] ")  (" topRight[1] ", " topRight[2] ")`n`n(" bottomLeft[1] ", " bottomLeft[2] ")  (" bottomRight[1] ", " bottomRight[2] ")`n`nIf these are acceptable, click continue. If you wish to recalibrate, click Try Again. If you wish to abort calibration, click cancel.`n`nFinally, if you want to save this calibration as the default, check the box below.`n`nWARNING! This will overwrite the current settings. If you wish to save your current settings, you must make the appropriate arrangements to save those before clicking Continue."
-
-
-    result := MsgBox(postCalText, "Mouse Calibration Complete", "CancelTryAgainContinue")
-
     ; Reset the sudokuCoordinates regardless of the result of the dialogue box
     sudokuCoordinates := []
 
-    if (result = "Cancel"){
-        Return
-    }
-    if (result = "TryAgain"){
-        toggleLayer("Entry")
-        mouseCalibration()
-    }
+    ; Text for post cal gui
+    postCalText := "Mouse calibration completed!`n`nYou have entered the following coordinates: `n`n(" topLeft[1] ", " topLeft[2] ") (" topRight[1] ", " topRight[2] ")`n`n(" bottomLeft[1] ", " bottomLeft[2] ") (" bottomRight[1] ", " bottomRight[2] ")`n`nIf these are acceptable, click Finish.`n`nClicking Recalibrate will restart the process, but save the previous data.`n`nIf you wish to abort calibration and discard the results, click Abort.`n`nFinally, if you want to save this calibration as the default, check the box below.`n`nWARNING! This will overwrite the current settings if checked, even if you abort calibration.`n`nIf you wish to save your current settings, you must make arrangements to save those first."
 
-    ; Update dialogue boxes to gui
+    ; result := MsgBox(postCalText, "Mouse Calibration Complete", "CancelTryAgainContinue")
+
+    postCal := Gui(,"Mouse Calibration Complete")
+    postCal.SetFont("S10")
+    postCal.Add("Text",, postCalText)
+    finishButton := postCal.Add("Button","Default xp+140 yp+330","Finish")
+    recalibrateButton := postCal.Add("Button", "xp+70","Recalibrate")
+    abortButton:= postCal.Add("Button","xp+100","Abort")
+    saveAsDefault := postCal.Add("Checkbox", "vsaveAsDefault", "Save calibration as default")
+    saveAsDefault.Move("180", "375  ")
+    postCal.Show("W600")
 
     ; Process coordinates into the start position and offsets
     avgWidth := ((topRight[1] - topLeft[1]) + (bottomRight[1] - bottomLeft[1]))/2
@@ -83,7 +81,13 @@ mouseCalibration(){
     startPositionX := Round(topLeft[1] + (.75 * xOffset))
     startPositionY := Round(topLeft[2] + (.5 * yOffset))
 
-    ; MsgBox(startPositionX " " startPositionY " " xOffset " " yOffset " " avgWidth " " avgHeight)
+    if (result = "Cancel"){
+        Return
+    }
+    if (result = "TryAgain"){
+        toggleLayer("Entry")
+        mouseCalibration()
+    }
 
     ; Save to ini file if relevant
     ; if(0){
@@ -98,7 +102,7 @@ tickingTooltip(countdownFrom){
         timer := A_Index * -1000
         timerFunc(secondsRemaining, -10)
         if(secondsRemaining = 0){
-            ; SetTimer(closeToolTip, timer)
+            SetTimer(closeToolTip, timer)
         }
         timerFunc(secondsRemaining, timer){
             SetTimer(() => tooltipText := "Coordinater received! This tooltip will shut off in " secondsRemaining " seconds.", timer)
