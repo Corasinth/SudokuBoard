@@ -38,5 +38,5 @@ e::SendInput("{Backspace}")
 ; ====================================== LAYER TOGGLE ======================================
 NumpadAdd::
 CapsLock::toggleLayer("Navigation")
-; Numpad0::
-; f::toggleLayer("Set-Coordinates")
+Numpad0::
+f::toggleLayer("Set-Coordinates")
