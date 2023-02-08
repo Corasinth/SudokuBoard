@@ -2,14 +2,14 @@
 
 ## Description 
 
-SudokuBoard is a (Windows only) AutoHotKey script designed for improving the computer sudoku experiance. It allows you to quickly and comfortably navigate the sudoku board, enter numbers, and delete them. What makes SudokuBoard truly useful is its ability to let you navigate to any cell with two key presses.
+SudokuBoard is a (Windows only) AutoHotKey script designed for improving the computer sudoku experiance. It allows you to quickly and comfortably navigate the sudoku board, enter numbers, and delete them. What makes SudokuBoard truly useful is its ability to let you navigate to any cell with two key presses. With access to a Numpad, you can even comfortably solve sudoku puzzles one-handed.
 
 Here's how it works:
 The script creates three layers you can easily swap between, `Entry`, `Navigation`, and `Set-Coordinates`. Each layer allows you to use the WASD/arrow keys to navigate the sudoku grid as you might expect, including wrapping around when reaching the start or end of a row or column. Additionally, each layer has additional features.
 
-In the `Entry` layer you can use the numpad or the 3x3 UIO/JKL/MCommaPeriod block of keys to enter numbers into the puzzle, granting a numpad-like functionality to those who don't have a full sized keyboard.
+In the `Entry` layer you can use the Numpad or the 3x3 UIO/JKL/MCommaPeriod block of keys to enter numbers into the puzzle, granting a Numpad-like functionality to those who don't have a full sized keyboard.
 
-The `Navigation` layer lets you identify a specific spell to auto-navigate to with the numpad or that 3x3 block. The first key press will send you to one of the larger 9 'boxes' while the second sends you to a cell within that box. The keys match up to the region you want to navigate to. For example, pressing the top-left key of the numpad or 3x3 block will send you to the top-left box, and then pressing the bottom-right key will send you to the bottom-right cell of that box. 
+The `Navigation` layer lets you identify a specific cell to auto-navigate to with the Numpad or that 3x3 block. The first key press will send you to one of the larger 9 'boxes' while the second sends you to a cell within that box. The keys match up to the region you want to navigate to. For example, pressing the top-left key of the Numpad or 3x3 block will send you to the top-left box, and then pressing the bottom-right key will send you to the bottom-right cell of that box. 
 
 This allows almost instant navigation across the grid without ever moving your hands off the keyboard.
 
@@ -19,7 +19,7 @@ SudokuBoard also features two modes, a Cursor Mode and a Mouse Mode. Why?
 
 Because not all sudoku programs/sites are created equally. Some don't let you use your arrow keys to navigate between cells, while others are inconsistent about how many presses of an arrow key it takes to get from one side of the grid to the other.
 
-Mouse Mode lets you bypass these issues by calibrating the mouse for a specific puzzle, and then letting the mouse take you where you need to go. When you use mouse mode, you don't need to set your coordinates when you start a puzzle and you can use SudokuBoard even on sites that have inconsistent interfaces, though it does require calibration.
+Mouse Mode lets you bypass these issues by calibrating the mouse for a specific puzzle, and then letting the mouse take you where you need to go. When you use mouse mode, you can use SudokuBoard even on sites that have inconsistent interfaces.
 
 For the full explanation of how to install, configure, and use this program continue reading, and I hope you enjoy SudokuBoard!
 
@@ -62,7 +62,7 @@ The settings here can be edited by opening the `settings.ini` file in Notepad, c
 
 `tooltipOn`, `xCoordinate`, and `yCoordinate` allow you to set the details of the tooltip that displays the controls, current layer, and whether or not mouse mode is engaged. Setting `tooltipOn` to 0 turns the tooltip off and setting it to 1 turns it back on. The `xCoordinate` and `yCoordinate` settings let you specify where which pixel on the screen the tooltip should appear (so on a 1920x1080 screen, setting those coordinates would have the tooltip appear in the lower left).
 
-`sqrSize` is a setting that, in future iterations, will let you use SudokuBoard for larger and smaller puzzles with dimensions that are perfect squares. Best not to mention it for now.
+`sqrSize` is a setting that, in future iterations, will let you use SudokuBoard for larger and smaller puzzles with dimensions that are perfect squares. Best not to touch it for now.
 
 `mouseMode` lets you start the script in Mouse Mode by default. You can of course toggle Mouse Mode while the script is running, but this setting lets you make Mouse Mode the default. 
 
@@ -128,7 +128,11 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `./Numpad 8`: Enter 8.  
 `,/Numpad 9`: Enter 9.  
 `CapsLock/Numpad +`: Go to `Navigation` layer.  
-`f/Numpad 0`: Go to `Set-Coordinates` layer (except in mouse mode).  
+`f/Numpad 0`: Go to `Set-Coordinates` layer.  
+`Control + Alt + Shift + Q`: Quit script.
+`Control + Alt + Shift + S`: Suspend hotkeys.
+`Control + Alt + Shift + M`: Toggle mouse mode.
+`Control + Alt + Shift + C`: Start mouse calibration.
 
 #### Navigation 
 
@@ -147,7 +151,11 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `./Numpad 2`: Enter bottom-center.   
 `,/Numpad 3`: Enter bottom-right.   
 `CapsLock/Numpad +`: Go to `Entry` layer.  
-`f/Numpad 0`: Go to `Set-Coordinates` layer (except in mouse mode).  
+`f/Numpad 0`: Go to `Set-Coordinates` layer.  
+`Control + Alt + Shift + Q`: Quit script.
+`Control + Alt + Shift + S`: Suspend hotkeys.
+`Control + Alt + Shift + M`: Toggle mouse mode.
+`Control + Alt + Shift + C`: Start mouse calibration.
 
 #### Set-Coordinates
 
@@ -162,17 +170,21 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `j/Numpad 4`: Enter middle-left. Second press returns to `Entry`.  
 `k/Numpad 5`: Enter middle-center. Second press returns to `Entry`.  
 `l/Numpad 6`: Enter middle-right. Second press returns to `Entry`.  
-`m/Numpad 1`: Enter bottom-left.Second press returns to `Entry`.  
+`m/Numpad 1`: Enter bottom-left.Second pres returns to `Entry`.  
 `./Numpad 2`: Enter bottom-center. Second press returns to `Entry`.  
 `,/Numpad 3`: Enter bottom-right. Second press returns to `Entry`.  
 `CapsLock/Numpad +`: Go to `Navigation` layer.  
 `f/Numpad 0`: Go to `Entry` layer.  
+`Control + Alt + Shift + Q`: Quit script.
+`Control + Alt + Shift + S`: Suspend hotkeys.
+`Control + Alt + Shift + M`: Toggle mouse mode.
+`Control + Alt + Shift + C`: Start mouse calibration.
   
 ### Navigation 
 
 Navigation is designed to be easy to learn and deeply intuitive. That said, it might be a little confusing in text. 
 
-A sudoku grid can be divided into 9 larger boxes, each of which contains 9 cells. Coincidentally, both the numpad and the remapped block of letter keys are also a 3x3 block containing 9 keys.
+A sudoku grid can be divided into 9 larger boxes, each of which contains 9 cells. Coincidentally, both the Numpad and the remapped block of letter keys are also a 3x3 block containing 9 keys.
 
 Thus, any cell in the sudoku grid can be identified by selecting one of the boxes, then one of the cells, using the physical placement of the 3x3 block.
 
@@ -184,7 +196,7 @@ And then press the bottom-left key (which is M/Numpad 1) to select this cell wit
 
 ![littleCell](./assets/readMeImages/littleExample7.png)
 
-This method is how the navigation layer works, as well as how you set the coordinates when using cursor mode. It is critical to set the coordinates before using any of the controls. If the controls are not working as expected, it is likely because the coordinates have not been set properly, or have gotten out of tune. Selecting a cell with the mouse, manually as it where, isn't tracked by the program, so if you do that it is important te set the coordinates again.
+This method is how the navigation layer works, as well as how you set the coordinates when using cursor mode. It is critical to set the coordinates before using any of the controls. If the controls are not working as expected, it is likely because the coordinates have not been set properly, or have gotten out of tune. Selecting a cell with the mouse, manually as it were (without using mouse mode), isn't tracked by the program, so if you do that it is important te set the coordinates again.
 
 The final note on navigation is that you need not press both the key to identify the box and the key to identify the cell. Once you press the first of the pair, the program will auto navigate to the box you have selected, at the same cell. So if you have selected the middle-center cell, and move to a new box, the middle-center cell of that box will be selected. You can then choose to select the exact cell you want, or navigate with the WASD/arrow keys. Leaving the `Navigation` layer resets the count, so that on returning your next key press will select the boxes again. 
 
@@ -192,9 +204,9 @@ The final note on navigation is that you need not press both the key to identify
 
 Mouse mode, as mentioned previously, requires prior calibration. It is best used for sites that don't let you select every cell, or sometimes require more than one press of the usual arrow keys to cross a cell (looking at you [websudoku.com](http://www.websudoku.com/)). 
 
-Most importantly, once mouse calibration is completed you do not need to use the `Set-Coordinates` layer, and it is disabled in mouse mode. 
-
 Otherwise, you can use mouse mode with just the same controls as the default cursor mode.
+
+Calibration is accessible through keyboard shortcuts and the tray icon menu.
 
 --- 
 ## Features
