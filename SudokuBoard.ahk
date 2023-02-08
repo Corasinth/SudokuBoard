@@ -110,7 +110,7 @@ if(tooltipOn){
 toggleLayer(targetLayer) {
     global
     currentLayer := targetLayer
-
+    boxCoordinates := []
     if(tooltipOn){
         Tooltip(tooltipTextGenerator(), xCoordinate, yCoordinate)
     }
