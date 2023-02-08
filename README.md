@@ -213,6 +213,10 @@ Calibration is accessible through keyboard shortcuts and the tray icon menu.
 
 This section is more for those interested in some of the behind-the-scenes details of how this script works. 
 
+I'll also try to add some of my reasoning for why the script works the way it does here. 
+
+For example, I decided to make layer switching based on a toggle (press to get in, press again to get out), instead of a modifier (hold down to get in, release to get out), because at high speeds toggling is much more reliable and I wanted to reduce errors here more than the benefits of modifiers.
+
 ### Coordinate Systems 
 
 There are two coordinate systems that one might use for picking out a particular cell in a sudoku grid. One, as described, is what I call box notation that follows this format: (box, cell). You can assign a number to each box like so:  
