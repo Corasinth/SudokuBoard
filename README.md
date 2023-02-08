@@ -23,6 +23,7 @@ Mouse Mode lets you bypass these issues by calibrating the mouse for a specific 
 
 For the full explanation of how to install, configure, and use this program continue reading, and I hope you enjoy SudokuBoard!
 
+(I know it's a little long, the important parts are [Installation](#installation) and [Usage](#usage), plus anything about mouse mode if you want to use that.)
 --- 
 ## Table of Contents
 
@@ -54,7 +55,7 @@ With AHK installed you can run the script by double clicking `SudokuBoard.ahk`.
 --- 
 ## Configuration 
 
-SudokuBoard has several configuration options to let you customize your experience. These are mostly located and controlled via the `settings.ini` file, but this section also discusses how to calibrate the mouse.
+SudokuBoard has several configuration options to let you customize your experience. These are mostly located and controlled via the `settings.ini` file, but this section also discusses how to calibrate the mouse. If you don't want to mess with the settings for now, feel free to skip the following section, and you can skip the section on mouse calibration to if you don't need it.
 
 ### Settings 
 
@@ -89,7 +90,7 @@ After calibration, you'll have the option to save the calibration, save the cali
 --- 
 ## Usage 
 
-The following three sections detail how exactly to use SudokuBoard. This will cover the keyboard controls, how exactly to use SudokuBoard's navigation method in the best way, and how and why to use mouse mode.
+The following three sections detail how exactly to use SudokuBoard. This will cover the keyboard controls, how exactly to use SudokuBoard's navigation method in the best way, and how and why to use the optional mouse mode.
 
 ### Controls 
 
@@ -117,7 +118,9 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `s/Down Arrow`: Move down one cell.  
 `a/Left Arrow`: Move left one cell.   
 `d/Right Arrow`: Move right one cell.  
-`e`: Backspace.   
+
+`e/Numpad Slash`: Backspace.   
+
 `u/Numpad 1`: Enter 1.  
 `i/Numpad 2`: Enter 2.  
 `o/Numpad 3`: Enter 3.  
@@ -127,8 +130,10 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `m/Numpad 7`: Enter 7.  
 `./Numpad 8`: Enter 8.  
 `,/Numpad 9`: Enter 9.  
+
 `CapsLock/Numpad +`: Go to `Navigation` layer.  
 `f/Numpad 0`: Go to `Set-Coordinates` layer.  
+
 `Control + Alt + Shift + Q`: Quit script.
 `Control + Alt + Shift + S`: Suspend hotkeys.
 `Control + Alt + Shift + M`: Toggle mouse mode.
@@ -140,7 +145,9 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `s/Down Arrow`: Move down one cell, and return to `Entry`.  
 `a/Left Arrow`: Move left one cell, and return to `Entry`.   
 `d/Right Arrow`: Move right one cell, and return to `Entry`.  
-`e`: Backspace.   
+
+`e/Numpad Slash`: Backspace.   
+
 `u/Numpad 7`: Enter top-left.  
 `i/Numpad 8`: Enter top-center.   
 `o/Numpad 9`: Enter top-right.   
@@ -150,8 +157,10 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `m/Numpad 1`: Enter bottom-left.  
 `./Numpad 2`: Enter bottom-center.   
 `,/Numpad 3`: Enter bottom-right.   
+
 `CapsLock/Numpad +`: Go to `Entry` layer.  
 `f/Numpad 0`: Go to `Set-Coordinates` layer.  
+
 `Control + Alt + Shift + Q`: Quit script.
 `Control + Alt + Shift + S`: Suspend hotkeys.
 `Control + Alt + Shift + M`: Toggle mouse mode.
@@ -163,18 +172,22 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `s/Down Arrow`: Move down one cell, and return to `Entry`.  
 `a/Left Arrow`: Move left one cell, and return to `Entry`.   
 `d/Right Arrow`: Move right one cell, and return to `Entry`.  
-`e`: Backspace.   
+
+`e/Numpad Slash`: Backspace.   
+
 `u/Numpad 7`: Enter top-left. Second press returns to `Entry`.  
 `i/Numpad 8`: Enter top-center. Second press returns to `Entry`.   
 `o/Numpad 9`: Enter top-right. Second press returns to `Entry`.  
 `j/Numpad 4`: Enter middle-left. Second press returns to `Entry`.  
 `k/Numpad 5`: Enter middle-center. Second press returns to `Entry`.  
 `l/Numpad 6`: Enter middle-right. Second press returns to `Entry`.  
-`m/Numpad 1`: Enter bottom-left.Second pres returns to `Entry`.  
+`m/Numpad 1`: Enter bottom-left. Second press returns to `Entry`.  
 `./Numpad 2`: Enter bottom-center. Second press returns to `Entry`.  
 `,/Numpad 3`: Enter bottom-right. Second press returns to `Entry`.  
+
 `CapsLock/Numpad +`: Go to `Navigation` layer.  
 `f/Numpad 0`: Go to `Entry` layer.  
+
 `Control + Alt + Shift + Q`: Quit script.
 `Control + Alt + Shift + S`: Suspend hotkeys.
 `Control + Alt + Shift + M`: Toggle mouse mode.
@@ -196,7 +209,7 @@ And then press the bottom-left key (which is M/Numpad 1) to select this cell wit
 
 ![littleCell](./assets/readMeImages/littleExample7.png)
 
-This method is how the navigation layer works, as well as how you set the coordinates when using cursor mode. It is critical to set the coordinates before using any of the controls. If the controls are not working as expected, it is likely because the coordinates have not been set properly, or have gotten out of tune. Selecting a cell with the mouse, manually as it were (without using mouse mode), isn't tracked by the program, so if you do that it is important te set the coordinates again.
+This method is how the navigation layer works, as well as how you set the coordinates when first starting a puzzle. It is critical to set the coordinates before using any of the controls. If the controls are not working as expected, it is likely because the coordinates have not been set properly, or have gotten out of tune. Selecting a cell with the mouse, manually as it were (without using mouse mode), isn't tracked by the program, so if you do that it is important te set the coordinates again.
 
 The final note on navigation is that you need not press both the key to identify the box and the key to identify the cell. Once you press the first of the pair, the program will auto navigate to the box you have selected, at the same cell. So if you have selected the middle-center cell, and move to a new box, the middle-center cell of that box will be selected. You can then choose to select the exact cell you want, or navigate with the WASD/arrow keys. Leaving the `Navigation` layer resets the count, so that on returning your next key press will select the boxes again. 
 
