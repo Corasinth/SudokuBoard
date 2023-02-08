@@ -48,14 +48,29 @@ boxCoordinates := []
 ; Whether or not to move cursor via mouse or arrow keys
 mouseMode := readMouseSettings("mouseMode") || 0
 ; Values for mouse position calculation
-startPositionX := readMouseSettings("startPositionX") || 0 
-startPositionY := readMouseSettings("startPositionY") || 0 
+startPositionX := readMouseSettings("startPositionX") || 0
+startPositionY := readMouseSettings("startPositionY") || 0
 xOffset := readMouseSettings("xOffset") || 0
-yOffset := readMouseSettings("yOffset") || 0 
+yOffset := readMouseSettings("yOffset") || 0
 
 ; If the proper values don't exist, automatically trigger mouse calibration when trying to switch to mouse mode
 ; Placed here in case of starting in mouse mode
 if(mouseMode && !(startPositionX && startPositionY && xOffset && yOffset)){
+    ; Shut off mouse mode before entering calibration
+    mouseModeToggle()
+    mouseCalibration()
+}
+
+; Adding tray menu items
+A_TrayMenu.Add("Mouse Mode", mouseModeToggleMenu)
+A_TrayMenu.Add("Mouse Calibration", mouseCalibrationMenu)
+
+; Functions for the tray menu must take specific parameters, so these are just wrappers
+mouseModeToggleMenu(ItemName, ItemPos, MyMenu){
+    mouseModeToggle()
+}
+
+mouseCalibrationMenu(ItemName, ItemPos, MyMenu){
     mouseCalibration()
 }
 
@@ -113,7 +128,7 @@ tooltipTextGenerator(){
         "Current Layer: " currentLayer " " ifMouseMode "
         ------------------------
         |_____w________u_i_o__|
-        |__a__s__d_____j_k_l___|     
+        |__a__s__d_____j_k_l___|
         |______________m_,_.___|
         |______________________|
         "
@@ -136,11 +151,14 @@ tooltipToggle(){
 mouseModeToggle(){
     global
     mouseMode := mouseMode ? 0 : 1
-    ToolTip(tooltipTextGenerator(), xCoordinate, yCoordinate)
+
     ; If the proper values don't exist, automatically trigger mouse calibration when trying to switch to mouse mode
     if(mouseMode && !(startPositionX && startPositionY && xOffset && yOffset)){
+        mouseMode := mouseMode ? 0 : 1
         mouseCalibration()
+        Return
     }
+    ToolTip(tooltipTextGenerator(), xCoordinate, yCoordinate)
 }
 
 ; These two functions handle conversion between the two kinds of coordinate systems
@@ -149,7 +167,7 @@ mouseModeToggle(){
 cartesianToBox(coordArr){
     x := coordArr[1]
     y := coordArr[2]
-    
+
     a := Round(Ceil(x/rootSqrSize) + ((Ceil(y/rootSqrSize)-1)*3))
     b := Round((Mod((x-1), rootSqrSize)) + ((Mod((y-1), rootSqrSize)*rootSqrSize)+1))
     Return [a, b]
@@ -260,5 +278,4 @@ mouseMovement(targetCoord){
 #Include ./layers/layers-9x9/set-coordinates.ahk
 #Include ./layers/layers-9x9/entry-mouseMode.ahk
 #Include ./layers/layers-9x9/navigation-mouseMode.ahk
-#Include ./layers/layers-9x9/set-coordinates-mouseMode.ahk
 #HotIf
