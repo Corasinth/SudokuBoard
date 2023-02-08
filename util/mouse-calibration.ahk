@@ -20,7 +20,7 @@ mouseCalibration(){
     "bottom right (🡢)"
     ]
     ; Text for initial gui
-    mouseCalText := "Welcome to the SudokuBoard mouse calibration!`n`nMouse calibration is important for mouse mode, where the navigation keys move the mouse around, rather than the cursor.`n`nTo calibrate your mouse, you'll need to click the four corners of the sudoku grid in the following order: top left (🡠), top right (🡢), bottom left (🡠), and bottom right (🡢).`n`nIt is important to position the puzzle as desired before continuing; if it is not please cancel calibration and adjust the puzzle appropriately. Otherwise, you will experiance inputs in unexpected places.`n`nIf you experiance troubles with mouse mode, try recalibrating.`n`nFor those who wish to be precise, the arrow and WASD keys will move the cursor one pixel in the appropiate direction during calibration, but extreme accuracy is not required for successful calibration.`n`nClick 'OK' to continue with mouse calibration, or 'Cancel' if you don't wish to proceed."
+    mouseCalText := "Welcome to the SudokuBoard mouse calibration!`n`nMouse calibration is important for mouse mode, where the navigation keys move the mouse around, rather than the cursor.`n`nTo calibrate your mouse, you'll need to click or press Enter at the four corners of the sudoku grid in the following order: top left (🡠), top right (🡢), bottom left (🡠), and bottom right (🡢).`n`nIt is important to position the puzzle as desired before continuing; if it is not please cancel calibration and adjust the puzzle appropriately. Otherwise, you will experiance inputs in unexpected places.`n`nIf you experiance troubles with mouse mode, try recalibrating.`n`nFor those who wish to be precise, the arrow and WASD keys will move the cursor one pixel in the appropiate direction during calibration, but extreme accuracy is not required for successful calibration.`n`nClick 'OK' to continue with mouse calibration, or 'Cancel' if you don't wish to proceed."
 
     result := MsgBox(mouseCalText, "Mouse Calibration", "OKCancel")
     if (result = "Cancel"){
@@ -33,12 +33,14 @@ mouseCalibration(){
     ; Calibration layer holds the hotkey that saves mouse coordinates to the relevant array on click
     toggleLayer("Calibration")
 
+    ; Waits for the tooltip array to be cycled through
     while(clickCounter < 4){
         Sleep(50)
     }
 
     toggleLayer("Entry")
-    tickingTooltip(5)
+    closeToolTip()
+    ; tickingTooltip(2)
 
     ; Not strictly necessary, but splitting up the coordinates into seperate variables makes them easier to do calculations on
     topLeft := sudokuCoordinates[1]
@@ -68,7 +70,10 @@ mouseCalibration(){
     saveAsDefault := postCal.Add("Checkbox", "vsaveAsDefault", "Save calibration as default")
     saveAsDefault.Move("180", "375 ")
 
+    ; showGui(){
     postCal.Show("W600")
+    ; }
+    ; setTimer(showGui, -4000)
 }
 
 processCoordinates(){
@@ -81,8 +86,8 @@ processCoordinates(){
     yOffset := Floor(avgHeight / sqrSize)
 
     ; The start position is to the right side of a cell and halfway down
-    startPositionX := Round(topLeft[1] + (.75 * xOffset))
-    startPositionY := Round(topLeft[2] + (.5 * yOffset))
+    startPositionX := Round(topLeft[1] + (.80 * xOffset))
+    startPositionY := Round(topLeft[2] + (.55 * yOffset))
 }
 
 ; ============================== GUI FUNCTIONS ==============================
@@ -112,21 +117,21 @@ abortButtonFunc(*){
 
 ; ============================== TOOLTIP FUNCTIONS ==============================
 ; Updates the timer
-tickingTooltip(countdownFrom){
-    global
-    Loop countdownFrom {
-        secondsRemaining := countdownFrom - A_Index
-        timer := A_Index * -1000
-        timerFunc(secondsRemaining, -10)
-        if(secondsRemaining = 0){
-            SetTimer(closeToolTip, timer)
-        }
-        timerFunc(secondsRemaining, timer){
-            SetTimer(() => tooltipText := "Coordinater received! This tooltip will shut off in " secondsRemaining " seconds.", timer)
-        }
-        timerFunc(secondsRemaining, timer)
-    }
-}
+; tickingTooltip(countdownFrom){
+;     global
+;     Loop countdownFrom {
+;         secondsRemaining := countdownFrom - A_Index
+;         timer := A_Index * -1000
+;         timerFunc(secondsRemaining, -10)
+;         if(secondsRemaining = 0){
+;             SetTimer(closeToolTip, timer)
+;         }
+;         timerFunc(secondsRemaining, timer){
+;             SetTimer(() => tooltipText := "Coordinater received! This tooltip will shut off in " secondsRemaining " seconds.", timer)
+;         }
+;         timerFunc(secondsRemaining, timer)
+;     }
+; }
 
 checkPosition(){
     global

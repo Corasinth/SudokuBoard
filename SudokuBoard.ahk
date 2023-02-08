@@ -266,6 +266,8 @@ mouseMovement(targetCoord){
     global
     ; Formula for calculating the screen coordinates based on the starting position, the offsets, and the cartesian coordinates; the one at the end is the number of clicks
     Click((startPositionX + ((targetCoord[1] - 1) * xOffset)) " " (startPositionY + ((targetCoord[2]-1) * yOffset)) " 1")
+    ; Keeps mouse out of the way
+    ; MouseMove(startPositionX - xOffset, (startPositionY + ((targetCoord[2]-1) * yOffset)), 0)
     ; ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 

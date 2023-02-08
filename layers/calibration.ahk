@@ -1,5 +1,6 @@
 #HotIf currentLayer = "Calibration"
 ; ====================================== CALIBRATION ======================================
+Enter::
 LButton::{
     global
     MouseGetPos(&XC, &YC)
