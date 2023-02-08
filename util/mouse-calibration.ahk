@@ -3,25 +3,7 @@
 CoordMode("Mouse", "Screen")
 #Include ../layers/calibration.ahk
 
-currentLayer := "on"
-toggleLayer(target){
-    global
-    currentLayer := target
-}
-sqrSize := 9
-
-xOffset := 1
-yOffset := 1
-startPositionX := 1
-startPositionY := 1
-
-saveCalibrationSettings(startPositionX, startPositionY, xOffset, yOffset){
-    IniWrite(startPositionX, "../settings.ini", "Mouse Mode Settings", "startPositionX")
-    IniWrite(startPositionY, "../settings.ini", "Mouse Mode Settings", "startPositionY")
-    IniWrite(xOffset, "../settings.ini", "Mouse Mode Settings", "xOffset")
-    IniWrite(yOffset, "../settings.ini", "Mouse Mode Settings", "yOffset")
-}
-
+; ============================== MAIN CALIBRATION FUNCTION ==============================
 mouseCalibration(){
     global
     ; Stores coordinates gained from left click
@@ -103,8 +85,6 @@ processCoordinates(){
     startPositionY := Round(topLeft[2] + (.5 * yOffset))
 }
 
-mouseCalibration()
-
 ; ============================== GUI FUNCTIONS ==============================
 finishButtonFunc(*){
     global
@@ -128,7 +108,6 @@ recalibrateButtonFunc(*){
 abortButtonFunc(*){
     global
     postCal.Destroy()
-    ExitApp
 }
 
 ; ============================== TOOLTIP FUNCTIONS ==============================

@@ -1,4 +1,4 @@
-#HotIf (currentLayer = "Entry" && mouseMode = 1)
+#HotIf (currentLayer = "Entry" && mouseMode)
 ; ====================================== NINE-BY-NINE BLOCK =====================================
 Numpad1::
 u::SendInput("1")
@@ -41,5 +41,5 @@ e::SendInput("{Delete}")
 ; ====================================== LAYER TOGGLE ======================================
 NumpadAdd::
 CapsLock::toggleLayer("Navigation")
-Numpad0::
-f::toggleLayer("Set-Coordinates")
+; Numpad0::
+; f::toggleLayer("Set-Coordinates")

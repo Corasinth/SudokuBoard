@@ -22,7 +22,9 @@ rootSqrSize := Sqrt(SqrSize)
 
 ; Array that holds the current cartesian coordinates of the cursor
 ; Squares are counted 1-9 starting at the top left
-cartesianCoordinates := [0, 0]
+; Coordinates default to 1, 1 so that mouse mode, once automatically calibrated, will work out of the box
+; Since mouse mode moves the mouse directly to coordinates, rather than sending X arrow key inputs, it doesn't technically need to track the current coordinates
+cartesianCoordinates := [1, 1]
 
 ; Array that tracks box coordinates for navigation and initial coordinate setting
 boxCoordinates := []
@@ -32,10 +34,12 @@ boxCoordinates := []
 #InputLevel 2
 #SuspendExempt True
 ; The suspend shortcut also disables the tooltip if it was active, though the tooltip remains if suspended via the GUI
+^!+s::Suspend(-1)
+^!+q::ExitApp
+; Hotkeys for mouse mode
+; For some reason these need to be within the suspend exempt section, otherwise they don't work; this is an ongoing issue
 ^!+c::mouseCalibration()
 ^!+m::mouseModeToggle()
-^!+s::Suspend(-1)
-Esc::ExitApp
 #SuspendExempt False
 
 ; ============================== MOUSE MODE VARIABLES AND FUNCTIONS ==============================
@@ -43,7 +47,6 @@ Esc::ExitApp
 
 ; Whether or not to move cursor via mouse or arrow keys
 mouseMode := readMouseSettings("mouseMode") || 0
-
 ; Values for mouse position calculation
 startPositionX := readMouseSettings("startPositionX") || 0 
 startPositionY := readMouseSettings("startPositionY") || 0 
@@ -51,6 +54,7 @@ xOffset := readMouseSettings("xOffset") || 0
 yOffset := readMouseSettings("yOffset") || 0 
 
 ; If the proper values don't exist, automatically trigger mouse calibration when trying to switch to mouse mode
+; Placed here in case of starting in mouse mode
 if(mouseMode && !(startPositionX && startPositionY && xOffset && yOffset)){
     mouseCalibration()
 }
@@ -78,13 +82,13 @@ OnSuspend(mode) {
     if (tooltipOn && mode = 1){
         ToolTip()
     } else if (tooltipOn && mode = 0){
-        ToolTip(currentLayer, xCoordinate, yCoordinate)
+        ToolTip(tooltipTextGenerator(), xCoordinate, yCoordinate)
     }
 }
 
 ; Runs ToolTip at start
 if(tooltipOn){
-    Tooltip(currentLayer, xCoordinate, ycoordinate)
+    Tooltip(tooltipTextGenerator(), xCoordinate, ycoordinate)
 }
 
 ; ============================== TOGGLE LAYERS ==============================
@@ -93,17 +97,36 @@ toggleLayer(targetLayer) {
     currentLayer := targetLayer
 
     if(tooltipOn){
-        Tooltip(currentLayer, xCoordinate, yCoordinate)
+        Tooltip(tooltipTextGenerator(), xCoordinate, yCoordinate)
     }
 }
 
 ; ============================== UTILITY FUNCTIONS ==============================
+tooltipTextGenerator(){
+    global
+    ifMouseMode := ""
+    if(mouseMode){
+        ifMouseMode := "`nMouse Mode Engaged"
+    }
+    tooltipText :=
+    (
+        "Current Layer: " currentLayer " " ifMouseMode "
+        ------------------------
+        |_____w________u_i_o__|
+        |__a__s__d_____j_k_l___|     
+        |______________m_,_.___|
+        |______________________|
+        "
+    )
+    Return tooltipText
+}
+
 ; Function to toggle whether or not the script displays a tooltip, for use in layers
 tooltipToggle(){
     global
     tooltipOn := tooltipOn ? 0 : 1
     if(tooltipOn){
-        ToolTip(currentLayer, xCoordinate, yCoordinate)
+        ToolTip(tooltipTextGenerator(), xCoordinate, yCoordinate)
     } else {
         ToolTip()
     }
@@ -111,7 +134,9 @@ tooltipToggle(){
 
 ; Simple function to toggle mouse mode on and off
 mouseModeToggle(){
+    global
     mouseMode := mouseMode ? 0 : 1
+    ToolTip(tooltipTextGenerator(), xCoordinate, yCoordinate)
     ; If the proper values don't exist, automatically trigger mouse calibration when trying to switch to mouse mode
     if(mouseMode && !(startPositionX && startPositionY && xOffset && yOffset)){
         mouseCalibration()
@@ -163,12 +188,20 @@ coordUpdate(xOrY, movement){
         ; If the updated coordinates are at the maximum, the equation results in 0. Since this reads as false, they default to the maximum square size
         cartesianCoordinates[1] := Mod((cartesianCoordinates[1] + movement), sqrSize) || sqrSize
         difference := cartesianCoordinates[1] - oldX
-        cursorMove([difference, 0])
+        if(mouseMode){
+            mouseMovement(cartesianCoordinates)
+        } else {
+            cursorMove([difference, 0])
+        }
     } else if (xOrY = "y"){
         oldY := cartesianCoordinates[2]
         cartesianCoordinates[2] := Mod((cartesianCoordinates[2] + movement), sqrSize) || sqrSize
         difference := cartesianCoordinates[2] - oldY
-        cursorMove([0, difference])
+        if(mouseMode){
+            mouseMovement(cartesianCoordinates)
+        } else {
+            cursorMove([0, difference])
+        }
     }
 }
 
@@ -184,7 +217,7 @@ navigate(num){
         ; The difference is calculated as new vs old then sent to the appropriate movement function
         movementArr := [targetCoord[1]-cartesianCoordinates[1], targetCoord[2]-cartesianCoordinates[2]]
         if (mouseMode){
-            mouseMove(targetCoord)
+            mouseMovement(targetCoord)
         } else {
             cursorMove(movementArr)
         }
@@ -193,7 +226,7 @@ navigate(num){
         targetCoord := boxToCartesian(boxCoordinates)
         movementArr := [targetCoord[1]-cartesianCoordinates[1], targetCoord[2]-cartesianCoordinates[2]]
         if (mouseMode){
-            mouseMove(targetCoord)
+            mouseMovement(targetCoord)
         } else {
             cursorMove(movementArr)
         }
@@ -211,7 +244,7 @@ cursorMove(movementArr){
     ; ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 
-mouseMove(targetCoord){
+mouseMovement(targetCoord){
     global
     ; Formula for calculating the screen coordinates based on the starting position, the offsets, and the cartesian coordinates; the one at the end is the number of clicks
     Click((startPositionX + ((targetCoord[1] - 1) * xOffset)) " " (startPositionY + ((targetCoord[2]-1) * yOffset)) " 1")
@@ -221,7 +254,7 @@ mouseMove(targetCoord){
 ; ============================== INCLUDE HOTKEYS ==============================
 ; Ensures the input level is above the default for other scripts
 #InputLevel 1
-; Include master file of layers. This file contains nothing but #Include commands for the rest of the config files
+
 #Include ./layers/layers-9x9/entry.ahk
 #Include ./layers/layers-9x9/navigation.ahk
 #Include ./layers/layers-9x9/set-coordinates.ahk
