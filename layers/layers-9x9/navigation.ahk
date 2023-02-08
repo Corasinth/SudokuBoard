@@ -46,12 +46,9 @@ s::{
     coordUpdate("y", 1)
     toggleLayer("Entry")
 }
-; ====================================== BACKSPACE/DELETE ======================================
+; ====================================== OTHER CONTROLS ======================================
 NumpadDiv::
-q::SendInput("{Backspace}")
-
-NumpadMult::
-e::SendInput("{Delete}")
+e::SendInput("{Backspace}")
 ; ====================================== LAYER TOGGLE ======================================
 NumpadAdd::
 CapsLock::toggleLayer("Entry")

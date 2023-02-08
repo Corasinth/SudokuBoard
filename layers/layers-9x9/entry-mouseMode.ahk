@@ -32,12 +32,9 @@ w::coordUpdate("y", -1)
 
 Down::
 s::coordUpdate("y", 1)
-; ====================================== BACKSPACE/DELETE ======================================
+; ====================================== OTHER CONTROLS ======================================
 NumpadDiv::
-q::SendInput("{Backspace}")
-
-NumpadMult::
-e::SendInput("{Delete}")
+e::SendInput("{Backspace}")
 ; ====================================== LAYER TOGGLE ======================================
 NumpadAdd::
 CapsLock::toggleLayer("Navigation")
