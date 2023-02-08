@@ -24,6 +24,7 @@ Mouse Mode lets you bypass these issues by calibrating the mouse for a specific 
 For the full explanation of how to install, configure, and use this program continue reading, and I hope you enjoy SudokuBoard!
 
 (I know it's a little long, the important parts are [Installation](#installation) and [Usage](#usage), plus anything about mouse mode if you want to use that.)
+
 --- 
 ## Table of Contents
 
