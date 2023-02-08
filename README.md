@@ -176,9 +176,9 @@ A sudoku grid can be divided into 9 larger boxes, each of which contains 9 cells
 
 Thus, any cell in the sudoku grid can be identified by selecting one of the boxes, then one of the cells, using the physical placement of the 3x3 block.
 
-For example, you might press the top-right key (which is U/Numpad 7), and select this box:
+For example, you might press the top-right key (which is O/Numpad 9), and select this box:
 
-![bigCell](./assets/readMeImages/bigExample1.png)
+![bigCell](./assets/readMeImages/bigExample3.png)
 
 And then press the bottom-left key (which is M/Numpad 1) to select this cell within the selected box:
 
