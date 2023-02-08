@@ -280,4 +280,5 @@ mouseMovement(targetCoord){
 #Include ./layers/layers-9x9/set-coordinates.ahk
 #Include ./layers/layers-9x9/entry-mouseMode.ahk
 #Include ./layers/layers-9x9/navigation-mouseMode.ahk
+#Include ./layers/layers-9x9/set-coordinates-mouseMode.ahk
 #HotIf
