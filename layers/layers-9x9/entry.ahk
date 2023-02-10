@@ -34,9 +34,14 @@ Down::
 s::coordUpdate("y", 1)
 ; ====================================== OTHER CONTROLS ======================================
 NumpadDiv::
-e::SendInput("{Backspace}")
+e::erase()
 ; ====================================== LAYER TOGGLE ======================================
 NumpadAdd::
 CapsLock::toggleLayer("Navigation")
 Numpad0::
 f::toggleLayer("Set-Coordinates")
+~Shift::{
+    if(pencilMarksLayer){
+        toggleLayer("Pencil-Marks")
+    } 
+}

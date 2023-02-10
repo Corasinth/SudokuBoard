@@ -1,25 +1,25 @@
-#HotIf (currentLayer = "Set-Coordinates" && mouseMode) 
+#HotIf (currentLayer = "Pencil-Marks" && mouseMode) 
 ; ====================================== NINE-BY-NINE BLOCK =====================================
-Numpad7::
-u::setCoord(1)
-Numpad8::
-i::setCoord(2)
-Numpad9::
-o::setCoord(3)
+Numpad1::
+u::pencilMark("1")
+Numpad2::
+i::pencilMark("2")
+Numpad3::
+o::pencilMark("3")
 
 Numpad4::
-j::setCoord(4)
+j::pencilMark("4")
 Numpad5::
-k::setCoord(5)
+k::pencilMark("5")
 Numpad6::
-l::setCoord(6)
+l::pencilMark("6")
 
-Numpad1::
-m::setCoord(7)
-Numpad2::
-,::setCoord(8)
-Numpad3::
-.::setCoord(9)
+Numpad7::
+m::pencilMark("7")
+Numpad8::
+,::pencilMark("8")
+Numpad9::
+.::pencilMark("9")
 
 ; ====================================== ARROW NAV ======================================
 Right::
@@ -52,9 +52,5 @@ e::erase()
 NumpadAdd::
 CapsLock::toggleLayer("Navigation")
 Numpad0::
-f::toggleLayer("Entry")
-~Shift::{
-    if(pencilMarksLayer){
-        toggleLayer("Pencil-Marks")
-    } 
-}
+f::toggleLayer("Set-Coordinates")
+~Shift::toggleLayer("Entry")

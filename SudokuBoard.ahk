@@ -20,6 +20,9 @@ yCoordinate := readConfigSettings("yCoordinate")
 sqrSize := 9
 rootSqrSize := Sqrt(SqrSize)
 
+; Whether or not a pencil mark mode for web sudoku is accessible
+pencilMarksLayer := readConfigSettings("webSudokuPencilMarks") || 0
+
 ; Array that holds the current cartesian coordinates of the cursor
 ; Squares are counted 1-9 starting at the top left
 ; Coordinates default to 1, 1 so that mouse mode, once automatically calibrated, will work out of the box
@@ -28,6 +31,17 @@ cartesianCoordinates := [1, 1]
 
 ; Array that tracks box coordinates for navigation and initial coordinate setting
 boxCoordinates := []
+
+; Holds matrix containing saved pencil mark data
+pencilMatrix := []
+; Adds rows (outer loop) and empty arrays for each cell (inner loop)
+Loop sqrSize {
+    loopNum := A_Index
+    pencilMatrix.Push([])
+    Loop sqrSize {
+        pencilMatrix[loopNum].Push("")
+    }
+}
 
 ; Universal quit and suspend key definitions go here
 ; Edit key defitions and input level as desired
@@ -271,6 +285,63 @@ mouseMovement(targetCoord){
     ; ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 
+; Simple functIon that is used to make sure pencil marks are erased in the matrix
+erase(){
+    ; When the user triggers an erase, this will wipe any existing stored pencil marks
+    pencilMatrix[cartesianCoordinates[1]][cartesianCoordinates[2]] := ""
+    SendInput("^{Backspace}")
+}
+
+; Function to track and update pencil marks
+pencilMark(mark){
+    global
+    ; Stores cureent marks
+    cellMarks := pencilMatrix[cartesianCoordinates[1]][cartesianCoordinates[2]]
+    ; Placeholder variable to build out pencil marks minus those to be removed
+    newPencilmarks := ""
+
+    ; Tracks whether this function was called to remove an item or ad it
+    removedMarks := 0
+    ; Entries that already exist should be removed
+    Loop Parse cellMarks{
+        if(A_LoopField = mark){
+            removedMarks := 1
+            Continue
+        }
+        newPencilmarks .= A_LoopField
+    }
+    cellMarks := newPencilmarks
+
+    ; The websudoku site only allows 5 entries, so if the cell is already full nothing should change
+    if(StrLen(cellMarks) <= 5){
+        if(!removedMarks){
+            cellMarks .= mark
+        }
+
+        if(StrLen(cellMarks) > 2){
+            cellMarks := StrReplace(cellMarks, ".")
+
+            ; Add delimeters for sorting
+            newPencilmarks := ""
+            Loop Parse cellMarks{
+                newPencilmarks .= A_LoopField
+                newPencilmarks .= ","
+            }
+            cellMarks := Sort(newPencilmarks, "N D,")
+            cellMarks := StrReplace(cellMarks, ",")
+        }
+    }
+    ; Save the marks before adding the extra dot so that the dot isn't saved
+    pencilMatrix[cartesianCoordinates[1]][cartesianCoordinates[2]] := cellMarks
+
+    if(StrLen(cellMarks) = 1){
+        ; Add just the . when there is just one pencil mark so that the pencil mark is never just a single digit
+        cellMarks .= "."
+    }
+    ; Starts by clearing the input field so that a new sorted list can be entered
+    SendInput("^{Backspace}" cellMarks)
+}
+
 ; ============================== INCLUDE HOTKEYS ==============================
 ; Ensures the input level is above the default for other scripts
 #InputLevel 1
@@ -278,7 +349,9 @@ mouseMovement(targetCoord){
 #Include ./layers/layers-9x9/entry.ahk
 #Include ./layers/layers-9x9/navigation.ahk
 #Include ./layers/layers-9x9/set-coordinates.ahk
+#Include ./layers/layers-9x9/pencil-marks.ahk
 #Include ./layers/layers-9x9/entry-mouseMode.ahk
 #Include ./layers/layers-9x9/navigation-mouseMode.ahk
 #Include ./layers/layers-9x9/set-coordinates-mouseMode.ahk
+#Include ./layers/layers-9x9/pencil-marks-mouseMode.ahk
 #HotIf

@@ -48,9 +48,14 @@ s::{
 }
 ; ====================================== OTHER CONTROLS ======================================
 NumpadDiv::
-e::SendInput("{Backspace}")
+e::erase()
 ; ====================================== LAYER TOGGLE ======================================
 NumpadAdd::
 CapsLock::toggleLayer("Entry")
 Numpad0::
 f::toggleLayer("Set-Coordinates")
+~Shift::{
+    if(pencilMarksLayer){
+        toggleLayer("Pencil-Marks")
+    } 
+}
