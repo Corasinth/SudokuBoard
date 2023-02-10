@@ -86,7 +86,7 @@ processCoordinates(){
     yOffset := Floor(avgHeight / sqrSize)
 
     ; The start position is to the right side of a cell and halfway down
-    startPositionX := Round(topLeft[1] + (.80 * xOffset))
+    startPositionX := Round(topLeft[1] + (.90 * xOffset))
     startPositionY := Round(topLeft[2] + (.55 * yOffset))
 }
 
