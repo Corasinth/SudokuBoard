@@ -1,4 +1,4 @@
-#HotIf (currentLayer = "Set-Coordinates" && !mouseMode)
+#HotIf currentLayer = "Set-Coordinates"
 ; ====================================== NINE-BY-NINE BLOCK =====================================
 Numpad7::
 u::setCoord(1)

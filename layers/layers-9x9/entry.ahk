@@ -1,4 +1,4 @@
-#HotIf (currentLayer = "Entry" && !mouseMode)
+#HotIf currentLayer = "Entry"
 ; ====================================== NINE-BY-NINE BLOCK =====================================
 Numpad1::
 u::SendInput("1")

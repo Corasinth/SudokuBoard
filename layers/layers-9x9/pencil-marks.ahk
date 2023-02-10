@@ -1,4 +1,4 @@
-#HotIf (currentLayer = "Pencil-Marks" && !mouseMode)
+#HotIf currentLayer = "Pencil-Marks"
 ; ====================================== NINE-BY-NINE BLOCK =====================================
 Numpad1::
 u::pencilMark("1")
