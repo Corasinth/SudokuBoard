@@ -13,17 +13,19 @@ The `Navigation` layer lets you identify a specific cell to auto-navigate to wit
 
 This allows almost instant navigation across the grid without ever moving your hands off the keyboard.
 
-Finally, the `Set-Coordinates` layer lets you tell the program which cell you started out in so it can keep track of your position.
+Finally, the `Set-Coordinates` layer lets you tell the program which cell you start the puzzle with selected so it can keep track of your position.
 
 SudokuBoard also features two modes, a Cursor Mode and a Mouse Mode. Why? 
 
 Because not all sudoku programs/sites are created equally. Some don't let you use your arrow keys to navigate between cells, while others are inconsistent about how many presses of an arrow key it takes to get from one side of the grid to the other.
 
-Mouse Mode lets you bypass these issues by calibrating the mouse for a specific puzzle, and then letting the mouse take you where you need to go. When you use mouse mode, you can use SudokuBoard even on sites that have inconsistent interfaces.
+Mouse Mode lets you bypass these issues by calibrating the mouse for a specific puzzle, and then letting you manipulate the mouse with the usual keyboard controls. When you use mouse mode, you can use SudokuBoard even on sites that have inconsistent interfaces.
 
-For the full explanation of how to install, configure, and use this program continue reading, and I hope you enjoy SudokuBoard!
+That's just the basics, the rest of this file contains a more thorough explanation of how to use SudokuBoard. Don't be intimidated if you can't remember everything right away, or some parts don't make sense! Just work with what you do understand, and it will all click together. Once you get the hang of it you'll see how SudokuBoard is a much better way of solving sudoku puzzles.
 
-(I know it's a little long, the important parts are [Installation](#installation) and [Usage](#usage), plus anything about mouse mode if you want to use that.)
+If you want to focus on just the important parts for now, you can skip sections like [Configuration](#configuration) and let SudokuBoard run on its default settings until your ready to read more. 
+
+However, be sure to read [Installation](#installation) and [Usage](#usage), plus anything about mouse mode if you end up using it. That's the bare minimun info you need to use SudokuBoard effectively. 
 
 --- 
 ## Table of Contents
@@ -37,6 +39,7 @@ For the full explanation of how to install, configure, and use this program cont
     * [Controls](#controls)
     * [Navigation](#navigation)
     * [Mouse Mode](#mouse-mode)
+    * [Web Sudoku Pencil Marks](#web-sudoku-pencil-marks)
 * [Features](#features)
     * [Coordinate Systems](#coordinate-systems)
     * [Mouse Mode](#mouse-mode)
@@ -47,28 +50,30 @@ For the full explanation of how to install, configure, and use this program cont
 --- 
 ## Installation
 
-To use this program, you must first install AutoHotKey V2, which [you can do here](https://www.autohotkey.com/v2/).
+To use this program, you must first install AutoHotKey V2, which [you can do here](https://www.autohotkey.com/v2/). This is the program that allows SudokuBoard to run.
 
-Then you can download this script using the green 'Code' button, selecting 'Download as Zip', and extracting the files. 
+Then you can download this script using the green 'Code' button, selecting 'Download as Zip', and extracting the resulting files from the downloaded zipped folder. 
 
 With AHK installed you can run the script by double clicking `SudokuBoard.ahk`.
 
 --- 
 ## Configuration 
 
-SudokuBoard has several configuration options to let you customize your experience. These are mostly located and controlled via the `settings.ini` file, but this section also discusses how to calibrate the mouse. If you don't want to mess with the settings for now, feel free to skip the following section, and you can skip the section on mouse calibration to if you don't need it.
+SudokuBoard has several configuration options to let you customize your experience. These are mostly located and controlled via the `settings.ini` file, but this section also discusses how to calibrate the mouse. If you don't want to mess with the settings for now, feel free to skip the following section, and you can skip the section on mouse calibration too if you don't need it.
 
 ### Settings 
 
 The settings here can be edited by opening the `settings.ini` file in Notepad, changing the settings, and saving the file. The changes take place once you start or reload the script.
 
-`tooltipOn`, `xCoordinate`, and `yCoordinate` allow you to set the details of the tooltip that displays the controls, current layer, and whether or not mouse mode is engaged. Setting `tooltipOn` to 0 turns the tooltip off and setting it to 1 turns it back on. The `xCoordinate` and `yCoordinate` settings let you specify where which pixel on the screen the tooltip should appear (so on a 1920x1080 screen, setting those coordinates would have the tooltip appear in the lower left).
+`tooltipOn`, `xCoordinate`, and `yCoordinate` allow you to set the details of the tooltip that displays the controls, current layer, and whether or not mouse mode is engaged. Setting `tooltipOn` to 0 turns the tooltip off and setting it to 1 turns it back on. The `xCoordinate` and `yCoordinate` settings let you specify where which pixel on the screen the tooltip should appear (so on a 1920x1080 screen, setting those coordinates would have the tooltip appear in the lower right).
 
 `sqrSize` is a setting that, in future iterations, will let you use SudokuBoard for larger and smaller puzzles with dimensions that are perfect squares. Best not to touch it for now.
 
+`webSudokuPencilMarks` is a setting used specifically for the way the site [websudoku.com](#http://www.websudoku.com/) handles there pencil marks. Unless you use this site, you can ignore this setting, otherwise set it to 1 and check out the relevant section under [Usage](#web-sudoku-pencil-marks).
+
 `mouseMode` lets you start the script in Mouse Mode by default. You can of course toggle Mouse Mode while the script is running, but this setting lets you make Mouse Mode the default. 
 
-The next four settings hold the data for the mouse calibration. You can read more about in [Features](#features). The values saved here work for one puzzle in the position you calibrated the mouse in. If you want to recalibrate for a diffrent position or puzzle you can comment out these four values by preceding them with a comma, like so:
+The next four settings hold the data for the mouse calibration. You can read more about in [Features](#features). The values saved here work for one puzzle in the position you calibrated the mouse in. If you want to recalibrate for a diffrent position or puzzle you can comment out these four values by preceding them with a semicolon, like so:
 ```
 ; startPositionX =0
 ; startPositionY=0
@@ -76,13 +81,15 @@ The next four settings hold the data for the mouse calibration. You can read mor
 ; yOffset =0
 ``` 
 
+Values that are commented out are not visible to the script.
+
 Then you can do another calibration to generate a new set of values, and easily swap between the two by only leaving uncommented the set you wish to use. 
 
 ### Mouse Calibration 
 
-Mouse calibration can be triggered by pressing `Control + Alt + Shift + c`, or by right-clicking the tray icon and selecting the appropriate option.
+Mouse calibration can be triggered by pressing `Control + Alt + Shift + c`, or by right-clicking the tray icon and selecting the appropriate option. Before starting the calibration it's important to arrange your sudoku puzzle on the screen as it would be when solving it. Mouse mode doesn't track the puzzle itself, only its position set when you calibrate, so if you move the puzzle around afterwards (such as scrolling down, changing the zoom level, or shrinking the window) the calibration will be invalid.
 
-Instructions for calibration will then pop up. Once you read these and close the dialogue box, the next four left clicks/Enter key presses will record the appropriate information.
+Once you begin, instructions for calibration will pop up. Once you read these and close the dialogue box, the next four left clicks/Enter key presses will record the appropriate information.
 
 You'll need to click the top-left corner of the sudoku grid, the top-right corner, the bottom-left corner, and lastly the bottom-right corner, in that order. You can move the mouse, or use the arrow/WASD keys to move the mouse one pixel. It isn't necessary to be pixel-perfect, but you should try to be accurate. If you have issues, you can always recalibrate.
 
@@ -93,9 +100,19 @@ After calibration, you'll have the option to save the calibration, save the cali
 
 The following three sections detail how exactly to use SudokuBoard. This will cover the keyboard controls, how exactly to use SudokuBoard's navigation method in the best way, and how and why to use the optional mouse mode.
 
+Using SudokuBoard is pretty simple. 
+
+1. First, you open up your sudoku puzzle.
+2. Then you start the program by double clicking `SudokuBoard.ahk` or a shortcut.
+3. Then you start your puzzle and select a cell, highlighting it or putting your cusor there. 
+4. You then press `F` to enter the `Set-Coordinates` layer, and set the coordinates. 
+5. Then you can use the keyboard controls to navigate the board with the `Navigation` layer or the arrow/WASD keys, and enter in numbers with the `Entry` layer.
+
 ### Controls 
 
-These are the controls that are active in each layer. In each layer, the arrow/WASD keys can be used to move one cell in any direction. However, in both the `Navigation` and `Set-Coordinates` layer, using these single-cell navigation keys will automatically send you back to the `Entry` layer. This is to make it easier to swap between the layers, and make the experiance of using the script at high speed more comfortable. 
+These are the controls that are active in each layer. It's ok if you don't learn all of these right away. Once you get a sense of the pattern, they'll be easy to remember. Just use this section as an introduction and a refrence guide.
+
+In each layer, the arrow/WASD keys can be used to move one cell in any direction. However, in both the `Navigation` and `Set-Coordinates` layer, using these single-cell navigation keys will automatically send you back to the `Entry` layer. This is to make it easier to swap between the layers, and make the experiance of using the script at high speed more comfortable. 
 
 Additionally, in each layer you can use the E key to backspace the current cell, though this does not send you back to the `Entry` layer since sometimes you just visit a cell to delete its contents and then move on.
 
@@ -109,9 +126,9 @@ From either of these layers you can press F or Numpad 0 to go to the `Set-Coordi
 
 Finally, from any layer you can press `Control + Alt + Shift + Letter` to activate a variety of effects. 
 
-Replacing `Letter` with `Q` will quit the program. `S` will suspend the program, disabling all the key commands except for these combos. `C` will start the mouse calibration, and `M` will toggle mouse mode. 
+Replacing `Letter` with `Q` will `Q`uit the program. `S` will `S`uspend the program, disabling all the key commands except for these combos (useful if you want to type something using your usual letter keys while the SudokuBoard is active). `C` will start the mouse `C`alibration, and `M` will toggle `M`ouse mode. 
 
-Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally make sense, the [Navigation section](#navigation) will explain.
+Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally make sense yet, the [Navigation section](#navigation) will explain.
 
 #### Entry 
 
@@ -135,14 +152,14 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `CapsLock/Numpad +`: Go to `Navigation` layer.  
 `f/Numpad 0`: Go to `Set-Coordinates` layer.  
 
-`Control + Alt + Shift + Q`: Quit script.
-`Control + Alt + Shift + S`: Suspend hotkeys.
-`Control + Alt + Shift + M`: Toggle mouse mode.
-`Control + Alt + Shift + C`: Start mouse calibration.
+`Control + Alt + Shift + Q`: Quit script.  
+`Control + Alt + Shift + S`: Suspend hotkeys.  
+`Control + Alt + Shift + M`: Toggle mouse mode.  
+`Control + Alt + Shift + C`: Start mouse calibration.  
 
 #### Navigation 
 
-`w/Up Arrow`: Move up one cell, and return to `Entry`.  
+`w/Up Arrow`: Move up one cell, and return to `Entry`.   
 `s/Down Arrow`: Move down one cell, and return to `Entry`.  
 `a/Left Arrow`: Move left one cell, and return to `Entry`.   
 `d/Right Arrow`: Move right one cell, and return to `Entry`.  
@@ -162,10 +179,10 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `CapsLock/Numpad +`: Go to `Entry` layer.  
 `f/Numpad 0`: Go to `Set-Coordinates` layer.  
 
-`Control + Alt + Shift + Q`: Quit script.
-`Control + Alt + Shift + S`: Suspend hotkeys.
-`Control + Alt + Shift + M`: Toggle mouse mode.
-`Control + Alt + Shift + C`: Start mouse calibration.
+`Control + Alt + Shift + Q`: Quit script.  
+`Control + Alt + Shift + S`: Suspend hotkeys.  
+`Control + Alt + Shift + M`: Toggle mouse mode.  
+`Control + Alt + Shift + C`: Start mouse calibration.  
 
 #### Set-Coordinates
 
@@ -189,10 +206,10 @@ Don't worry if the `Navigation` and `Set-Coordinates` controls don't totally mak
 `CapsLock/Numpad +`: Go to `Navigation` layer.  
 `f/Numpad 0`: Go to `Entry` layer.  
 
-`Control + Alt + Shift + Q`: Quit script.
-`Control + Alt + Shift + S`: Suspend hotkeys.
-`Control + Alt + Shift + M`: Toggle mouse mode.
-`Control + Alt + Shift + C`: Start mouse calibration.
+`Control + Alt + Shift + Q`: Quit script.  
+`Control + Alt + Shift + S`: Suspend hotkeys.  
+`Control + Alt + Shift + M`: Toggle mouse mode.  
+`Control + Alt + Shift + C`: Start mouse calibration.  
   
 ### Navigation 
 
@@ -216,11 +233,27 @@ The final note on navigation is that you need not press both the key to identify
 
 ### Mouse Mode 
 
-Mouse mode, as mentioned previously, requires prior calibration. It is best used for sites that don't let you select every cell, or sometimes require more than one press of the usual arrow keys to cross a cell (looking at you [websudoku.com](http://www.websudoku.com/)). 
+Mouse mode is a way to control the mouse using the keyboard. Using the arrow keys or the navigation layer to move around the cursor will, by default, trigger presses of the arrow keys to get you where you need to go. With mouse mode, those same controls will instead move your mouse to the cell you need to select and click on it.
 
-Otherwise, you can use mouse mode with just the same controls as the default cursor mode.
+This is why mouse mode requires calibration; the script needs to know exactly where on the screen the puzzle grid is and its dimensions. Calibration is accessible through keyboard shortcuts and the tray icon menu.
 
-Calibration is accessible through keyboard shortcuts and the tray icon menu.
+Mouse mode is best used for sites that don't let you select every cell, or sometimes require more than one press of the usual arrow keys to cross a cell (looking at you [websudoku.com](http://www.websudoku.com/)).
+
+### Web Sudoku Pencil Marks 
+
+The website [websudoku.com](http://www.websudoku.com/) handles pencil marks (also known as candidate marks in a non-standard way). It simply allows you to type multiple numbers, up to 5, in a single cell. A cell containing more than one number has the numbers turn green and small. For this site, and any site with a similar method, I have added a special pencil mark layer.
+
+To use this layer, first allow access to it by setting `webSudokuPencilMarks` to 1 in the `settings.ini` file. 
+
+Then, from any layer, tapping `Shift` will send you into the pencil mark mode (and tapping it again will send you back to the `Entry` layer). This layer is identical to `Entry` indcluding the keys that let you go to the `Navigation` and `Set-Coordinate` layers, except that all numbers entered while in this mode will be remembered as pencil marks.
+
+When you enter a single number, it will automatically have a period after to get websudoku.com to recognize it as a pencil mark, and SudokuBoard will automatically remove this period when more than one number is entered into a cell. Moreover, you can remove a number from a cell by entering it again. Entering '5' in a cell containing the pencil marks '158' will automatically set the pencil marks in that cell to '18'. Additionally, the numbers in a cell will automatically sort, so entering '5' then '2' will result in the cell containing '25'. Pressing `E` or `Numpad Slash` to erase the contents of the cell will erase all pencil marks.
+
+Importantly, the `Pencil-Marks` must be used with mouse mode. You need to use mouse mode on this site anyway, but on other sites the program will not be able to navigate properly if pencil marks work the way the do on websudoku.com and you are not using mouse mode.
+
+Finally, and just as importantly, you currently can still enter multiple numbers into a cell without moving to this layer, but such marks will not benefit from the features listed here since the script won't 'remember' that you entered those numbers as pencil marks.
+
+If you find yourself entering pencil marks without switching to the `Pencil-Marks` layer, I reccommend erasing the notes and retyping them in the correct layer. Luckily, SudokuBoard makes this relatively painless.
 
 --- 
 ## Features
