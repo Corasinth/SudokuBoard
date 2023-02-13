@@ -350,8 +350,4 @@ pencilMark(mark){
 #Include ./layers/layers-9x9/navigation.ahk
 #Include ./layers/layers-9x9/set-coordinates.ahk
 #Include ./layers/layers-9x9/pencil-marks.ahk
-#Include ./layers/layers-9x9/entry-mouseMode.ahk
-#Include ./layers/layers-9x9/navigation-mouseMode.ahk
-#Include ./layers/layers-9x9/set-coordinates-mouseMode.ahk
-#Include ./layers/layers-9x9/pencil-marks-mouseMode.ahk
 #HotIf
