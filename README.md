@@ -243,7 +243,7 @@ Mouse mode is best used for sites that don't let you select every cell, or somet
 
 ### Web Sudoku Pencil Marks 
 
-The website [websudoku.com](http://www.websudoku.com/) handles pencil marks (also known as candidate marks in a non-standard way). It simply allows you to type multiple numbers, up to 5, in a single cell. A cell containing more than one number has the numbers turn green and small. For this site, and any site with a similar method, I have added special detection for pencil marks.
+The website [websudoku.com](http://www.websudoku.com/) handles pencil marks (also known as candidate marks) in a non-standard way. It simply allows you to type multiple numbers, up to 5, in a single cell. A cell containing more than one number has the numbers turn green and small. For this site, and any site with a similar method, I have added special detection for pencil marks.
 
 To access this special detection, first allow access to it by setting `webSudokuPencilMarks` to 1 in the `settings.ini` file. 
 
