@@ -53,8 +53,3 @@ NumpadAdd::
 CapsLock::toggleLayer("Navigation")
 Numpad0::
 f::toggleLayer("Entry")
-~Shift::{
-    if(webSudokuPencilMarks){
-        toggleLayer("Pencil-Marks")
-    } 
-}

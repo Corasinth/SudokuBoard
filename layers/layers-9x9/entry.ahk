@@ -40,8 +40,3 @@ NumpadAdd::
 CapsLock::toggleLayer("Navigation")
 Numpad0::
 f::toggleLayer("Set-Coordinates")
-~Shift::{
-    if(webSudokuPencilMarks){
-        toggleLayer("Pencil-Marks")
-    } 
-}
