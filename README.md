@@ -237,23 +237,27 @@ Mouse mode is a way to control the mouse using the keyboard. Using the arrow key
 
 This is why mouse mode requires calibration; the script needs to know exactly where on the screen the puzzle grid is and its dimensions. Calibration is accessible through keyboard shortcuts and the tray icon menu.
 
+If you try to activate mouse mode (via the keyboard shortcut or the tray menu), and you do not have stored calibration data, mouse mode will not activate. Instead, a prompt for calibration will appear. Once calibration has been completed, mouse mode can be properly activated.
+
 Mouse mode is best used for sites that don't let you select every cell, or sometimes require more than one press of the usual arrow keys to cross a cell (looking at you [websudoku.com](http://www.websudoku.com/)).
 
 ### Web Sudoku Pencil Marks 
 
-The website [websudoku.com](http://www.websudoku.com/) handles pencil marks (also known as candidate marks in a non-standard way). It simply allows you to type multiple numbers, up to 5, in a single cell. A cell containing more than one number has the numbers turn green and small. For this site, and any site with a similar method, I have added a special pencil mark layer.
+The website [websudoku.com](http://www.websudoku.com/) handles pencil marks (also known as candidate marks in a non-standard way). It simply allows you to type multiple numbers, up to 5, in a single cell. A cell containing more than one number has the numbers turn green and small. For this site, and any site with a similar method, I have added special detection for pencil marks.
 
-To use this layer, first allow access to it by setting `webSudokuPencilMarks` to 1 in the `settings.ini` file. 
+To access this special detection, first allow access to it by setting `webSudokuPencilMarks` to 1 in the `settings.ini` file. 
 
-Then, from any layer, tapping `Shift` will send you into the pencil mark mode (and tapping it again will send you back to the `Entry` layer). This layer is identical to `Entry` indcluding the keys that let you go to the `Navigation` and `Set-Coordinate` layers, except that all numbers entered while in this mode will be remembered as pencil marks.
+With this special detection activated, typing multiple numbers in a cell will automatically be detected as pencil marks. This means that, regardless of the order you enter your marks, the numbers will keep themselves sorted, least to greatest. Additionally, trying to enter a number that a cell already contains will delete that number.
 
-When you enter a single number, it will automatically have a period after to get websudoku.com to recognize it as a pencil mark, and SudokuBoard will automatically remove this period when more than one number is entered into a cell. Moreover, you can remove a number from a cell by entering it again. Entering '5' in a cell containing the pencil marks '158' will automatically set the pencil marks in that cell to '18'. Additionally, the numbers in a cell will automatically sort, so entering '5' then '2' will result in the cell containing '25'. Pressing `E` or `Numpad Slash` to erase the contents of the cell will erase all pencil marks.
+For example, you might enter the numbers `1`, `5`, and `3` in that order, resulting in a cell containing `135`. If you then entered `3` again, the cell would change to contain only `15`.
 
-Importantly, the `Pencil-Marks` must be used with mouse mode. You need to use mouse mode on this site anyway, but on other sites the program will not be able to navigate properly if pencil marks work the way the do on websudoku.com and you are not using mouse mode.
+If you wish a cell to contain only a single number, but still have that number be denoted as a pencil mark, simply enter that number, then enter and remove any other number. Your original number will remain with a `.` to make it green and small. The dot automatically removes itself if you add more numbers to the cell.  
 
-Finally, and just as importantly, you currently can still enter multiple numbers into a cell without moving to this layer, but such marks will not benefit from the features listed here since the script won't 'remember' that you entered those numbers as pencil marks.
+When you enter multiple numbers into a cell the script detects that you are entering pencil marks. Subsequently removing all other numbers but one doesn't undo that detection, rather the script assumes you wish to have only a single pencil mark in that cell. Thus, entering `5`, then double tapping any other 'number' key from either the numpad or the 3x3 block results in a cell that contains `5.`.
 
-If you find yourself entering pencil marks without switching to the `Pencil-Marks` layer, I reccommend erasing the notes and retyping them in the correct layer. Luckily, SudokuBoard makes this relatively painless.
+If you wish to empty a cell of pencil marks you can do so with `E` or `Numpad Slash` as normal. For example, if you decide that that previous cell with the pencil mark `5.` should actually just be `5`, you need only erase the contents with `E` and reenter the appropriate number.
+
+Importantly, if you use this pencil-marks feature, you must also use mouse mode. You need to use mouse mode on websudoku.com anyway, but on other sites the program will not be able to navigate properly in the default mode if you are using this special detection and pencil marks work the way the do on websudoku.com.
 
 --- 
 ## Features
