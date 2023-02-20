@@ -25,7 +25,7 @@ That's just the basics, the rest of this file contains a more thorough explanati
 
 If you want to focus on just the important parts for now, you can skip sections like [Configuration](#configuration) and let SudokuBoard run on its default settings until your ready to read more. 
 
-However, be sure to read [Installation](#installation) and [Usage](#usage), plus anything about mouse mode if you end up using it. That's the bare minimun info you need to use SudokuBoard effectively. 
+However, be sure to read [Installation](#installation) and [Usage](#usage), plus anything about mouse mode if you end up using it. That's the bare minimum info you need to use SudokuBoard effectively. 
 
 --- 
 ## Table of Contents
