@@ -21,7 +21,7 @@ sqrSize := 9
 rootSqrSize := Sqrt(SqrSize)
 
 ; Whether or not a pencil mark mode for web sudoku is accessible
-pencilMarksLayer := readConfigSettings("webSudokuPencilMarks") || 0
+webSudokuPencilMarks := readConfigSettings("webSudokuPencilMarks") || 0
 
 ; Array that holds the current cartesian coordinates of the cursor
 ; Squares are counted 1-9 starting at the top left
@@ -285,11 +285,28 @@ mouseMovement(targetCoord){
     ; ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 
-; Simple functIon that is used to make sure pencil marks are erased in the matrix
+; Simple function that is used to make sure pencil marks are erased in the matrix
 erase(){
     ; When the user triggers an erase, this will wipe any existing stored pencil marks
     pencilMatrix[cartesianCoordinates[1]][cartesianCoordinates[2]] := ""
     SendInput("^{Backspace}")
+}
+
+; Function for inputting numbers, with additional logic to handle pencil marks for websudoku.com
+entry(numStr){
+    ; If mode is deactivated, simply send the relevant number
+    if(!webSudokuPencilMarks){
+        SendInput(numStr)
+        Return
+    }
+    cellMarks := pencilMatrix[cartesianCoordinates[1]][cartesianCoordinates[2]]
+
+    if(!cellMarks){
+        pencilMatrix[cartesianCoordinates[1]][cartesianCoordinates[2]] := numStr
+        SendInput(numStr)
+    } else {
+       pencilMark(numStr) 
+    }
 }
 
 ; Function to track and update pencil marks
@@ -320,16 +337,16 @@ pencilMark(mark){
 
         if(StrLen(cellMarks) > 2){
             cellMarks := StrReplace(cellMarks, ".")
-
-            ; Add delimeters for sorting
-            newPencilmarks := ""
-            Loop Parse cellMarks{
-                newPencilmarks .= A_LoopField
-                newPencilmarks .= ","
-            }
-            cellMarks := Sort(newPencilmarks, "N D,")
-            cellMarks := StrReplace(cellMarks, ",")
         }
+
+        ; Add delimeters for sorting
+        newPencilmarks := ""
+        Loop Parse cellMarks{
+            newPencilmarks .= A_LoopField
+            newPencilmarks .= ","
+        }
+        cellMarks := Sort(newPencilmarks, "N D,")
+        cellMarks := StrReplace(cellMarks, ",")
     }
     ; Save the marks before adding the extra dot so that the dot isn't saved
     pencilMatrix[cartesianCoordinates[1]][cartesianCoordinates[2]] := cellMarks

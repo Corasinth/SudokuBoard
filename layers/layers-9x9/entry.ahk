@@ -1,25 +1,25 @@
 #HotIf currentLayer = "Entry"
 ; ====================================== NINE-BY-NINE BLOCK =====================================
 Numpad1::
-u::SendInput("1")
+u::entry("1")
 Numpad2::
-i::SendInput("2")
+i::entry("2")
 Numpad3::
-o::SendInput("3")
+o::entry("3")
 
 Numpad4::
-j::SendInput("4")
+j::entry("4")
 Numpad5::
-k::SendInput("5")
+k::entry("5")
 Numpad6::
-l::SendInput("6")
+l::entry("6")
 
 Numpad7::
-m::SendInput("7")
+m::entry("7")
 Numpad8::
-,::SendInput("8")
+,::entry("8")
 Numpad9::
-.::SendInput("9")
+.::entry("9")
 ; ====================================== ARROW NAV ======================================
 Right::
 d::coordUpdate("x", 1)
@@ -41,7 +41,7 @@ CapsLock::toggleLayer("Navigation")
 Numpad0::
 f::toggleLayer("Set-Coordinates")
 ~Shift::{
-    if(pencilMarksLayer){
+    if(webSudokuPencilMarks){
         toggleLayer("Pencil-Marks")
     } 
 }

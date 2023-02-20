@@ -55,7 +55,7 @@ CapsLock::toggleLayer("Entry")
 Numpad0::
 f::toggleLayer("Set-Coordinates")
 ~Shift::{
-    if(pencilMarksLayer){
+    if(webSudokuPencilMarks){
         toggleLayer("Pencil-Marks")
     } 
 }
