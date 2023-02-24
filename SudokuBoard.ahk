@@ -3,8 +3,9 @@
 ; Sets absolute coordinates for tooltip
 CoordMode("ToolTip", "Screen")
 CoordMode("Mouse", "Screen")
+; Set Tray Icon
+TraySetIcon("./assets/icon-file/icon.ico")
 #Include ./util/ini-functions.ahk
-
 ; ============================== MAIN VARIABLES ==============================
 ; This is the tracker that determines the current layer
 ; Also the layer that k-plus starts up with
@@ -366,5 +367,4 @@ pencilMark(mark){
 #Include ./layers/layers-9x9/entry.ahk
 #Include ./layers/layers-9x9/navigation.ahk
 #Include ./layers/layers-9x9/set-coordinates.ahk
-#Include ./layers/layers-9x9/pencil-marks.ahk
 #HotIf
