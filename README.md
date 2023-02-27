@@ -227,7 +227,11 @@ And then press the bottom-left key (which is M/Numpad 1) to select this cell wit
 
 ![littleCell](./assets/readme-images/littleExample7.png)
 
-This method is how the navigation layer works, as well as how you set the coordinates when first starting a puzzle. It is critical to set the coordinates before using any of the controls. If the controls are not working as expected, it is likely because the coordinates have not been set properly, or have gotten out of tune. Selecting a cell with the mouse, manually as it were (without using mouse mode), isn't tracked by the program, so if you do that it is important te set the coordinates again.
+Thus, pressing these two buttons in sequence will select the following cell:
+
+![finalExample](./assets/readme-images/finalExample.png)
+
+This method is how the navigation layer works, as well as how you set the coordinates when first starting a puzzle. It is critical to set the coordinates before using any of the controls. If the controls are not working as expected, it is likely because the coordinates have not been set properly, or have gotten out of tune. Selecting a cell with the mouse, manually as it were (without using mouse mode), isn't tracked by the program, so if you do that it is important to set the coordinates again.
 
 The final note on navigation is that you need not press both the key to identify the box and the key to identify the cell. Once you press the first of the pair, the program will auto navigate to the box you have selected, at the same cell. So if you have selected the middle-center cell, and move to a new box, the middle-center cell of that box will be selected. You can then choose to select the exact cell you want, or navigate with the WASD/arrow keys. Leaving the `Navigation` layer resets the count, so that on returning your next key press will select the boxes again. 
 
@@ -249,7 +253,7 @@ To access this special detection, first allow access to it by setting `webSudoku
 
 With this special detection activated, typing multiple numbers in a cell will automatically be detected as pencil marks. This means that, regardless of the order you enter your marks, the numbers will keep themselves sorted, least to greatest. Additionally, trying to enter a number that a cell already contains will delete that number.
 
-For example, you might enter the numbers `1`, `5`, and `3` in that order, resulting in a cell containing `135`. If you then entered `3` again, the cell would change to contain only `15`.
+For example, you might enter the numbers `1`, `5`, and `3` in that order (using the numpad or designated 3x3 block), resulting in a cell containing `135`. If you then entered `3` again, the cell would change to contain only `15`.
 
 If you wish a cell to contain only a single number, but still have that number be denoted as a pencil mark, simply enter that number, then enter and remove any other number. Your original number will remain with a `.` to make it green and small. The dot automatically removes itself if you add more numbers to the cell.  
 
@@ -266,12 +270,12 @@ This section is more for those interested in some of the behind-the-scenes detai
 
 I'll also try to add some of my reasoning for why the script works the way it does here. 
 
-For example, I decided to make layer switching based on a toggle (press to get in, press again to get out), instead of a modifier (hold down to get in, release to get out), because at high speeds toggling is much more reliable and I wanted to reduce errors here more than the benefits of modifiers.
+For example, I decided to make layer switching based on a toggle (press to get in, press again to get out), instead of a modifier (hold down to get in, release to get out), because at high speeds toggling is much more reliable and I wanted to reduce errors here more than I wanted the benefits of modifiers.
 
 ### Coordinate Systems 
 
 There are two coordinate systems that one might use for picking out a particular cell in a sudoku grid. One, as described, is what I call box notation that follows this format: (box, cell). You can assign a number to each box like so:  
-![bigGrid](./assets/readMeImages/bigGrid.png)
+![bigGrid](./assets/readme-images/bigGrid.png)
 
 And a number to each of the smaller cells like so:  
 ![littleGrid](./assets/readme-images/fullGrid.png)
