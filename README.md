@@ -69,7 +69,7 @@ The settings here can be edited by opening the `settings.ini` file in Notepad, c
 
 `sqrSize` is a setting that, in future iterations, will let you use SudokuBoard for larger and smaller puzzles with dimensions that are perfect squares. Best not to touch it for now.
 
-`webSudokuPencilMarks` is a setting used specifically for the way the site [websudoku.com](#http://www.websudoku.com/) handles there pencil marks. Unless you use this site, you can ignore this setting, otherwise set it to 1 and check out the relevant section under [Usage](#web-sudoku-pencil-marks).
+`webSudokuPencilMarks` is a setting used specifically for the way the site [websudoku.com](#http://www.websudoku.com/) handles their pencil marks. Unless you use this site, you can ignore this setting, otherwise set it to 1 and check out the relevant section under [Usage](#web-sudoku-pencil-marks).
 
 `mouseMode` lets you start the script in Mouse Mode by default. You can of course toggle Mouse Mode while the script is running, but this setting lets you make Mouse Mode the default. 
 
