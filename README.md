@@ -110,7 +110,7 @@ Using SudokuBoard is pretty simple.
 
 ### Controls 
 
-These are the controls that are active in each layer. It's ok if you don't learn all of these right away. Once you get a sense of the pattern, they'll be easy to remember. Just use this section as an introduction and a refrence guide.
+These are the controls that are active in each layer. It's ok if you don't learn all of these right away. Once you get a sense of the pattern, they'll be easy to remember. Just use this section as an introduction and a reference guide.
 
 In each layer, the arrow/WASD keys can be used to move one cell in any direction. However, in both the `Navigation` and `Set-Coordinates` layer, using these single-cell navigation keys will automatically send you back to the `Entry` layer. This is to make it easier to swap between the layers, and make the experiance of using the script at high speed more comfortable. 
 
@@ -221,11 +221,11 @@ Thus, any cell in the sudoku grid can be identified by selecting one of the boxe
 
 For example, you might press the top-right key (which is O/Numpad 9), and select this box:
 
-![bigCell](./assets/readMeImages/bigExample3.png)
+![bigCell](./assets/readme-images/bigExample3.png)
 
 And then press the bottom-left key (which is M/Numpad 1) to select this cell within the selected box:
 
-![littleCell](./assets/readMeImages/littleExample7.png)
+![littleCell](./assets/readme-images/littleExample7.png)
 
 This method is how the navigation layer works, as well as how you set the coordinates when first starting a puzzle. It is critical to set the coordinates before using any of the controls. If the controls are not working as expected, it is likely because the coordinates have not been set properly, or have gotten out of tune. Selecting a cell with the mouse, manually as it were (without using mouse mode), isn't tracked by the program, so if you do that it is important te set the coordinates again.
 
@@ -274,7 +274,7 @@ There are two coordinate systems that one might use for picking out a particular
 ![bigGrid](./assets/readMeImages/bigGrid.png)
 
 And a number to each of the smaller cells like so:  
-![littleGrid](./assets/readMeImages/fullGrid.png)
+![littleGrid](./assets/readme-images/fullGrid.png)
 
 You could also, as is demonstrated in the photos, use a more traditional cartesian coordinate system. 
 
