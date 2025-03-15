@@ -2,7 +2,7 @@
 
 ## Description 
 
-SudokuBoard is a (Windows only) AutoHotKey script designed for improving the computer sudoku experiance. It allows you to quickly and comfortably navigate the sudoku board, enter numbers, and delete them. What makes SudokuBoard truly useful is its ability to let you navigate to any cell with two key presses. With access to a Numpad, you can even comfortably solve sudoku puzzles one-handed.
+SudokuBoard is a (Windows only) AutoHotKey script designed for improving the computer sudoku experiance. It allows you to quickly and comfortably navigate the sudoku board, enter numbers, and delete them. What makes SudokuBoard truly useful is its ability to let you navigate to any cell with two key presses. With access to a Numpad, you can even comfortably and quickly solve sudoku puzzles one-handed.
 
 Here's how it works:
 The script creates three layers you can easily swap between, `Entry`, `Navigation`, and `Set-Coordinates`. Each layer allows you to use the WASD/arrow keys to navigate the sudoku grid as you might expect, including wrapping around when reaching the start or end of a row or column. Additionally, each layer has additional features.
@@ -23,7 +23,7 @@ Mouse Mode lets you bypass these issues by calibrating the mouse for a specific 
 
 That's just the basics, the rest of this file contains a more thorough explanation of how to use SudokuBoard. Don't be intimidated if you can't remember everything right away, or some parts don't make sense! Just work with what you do understand, and it will all click together. Once you get the hang of it you'll see how SudokuBoard is a much better way of solving sudoku puzzles.
 
-If you want to focus on just the important parts for now, you can skip sections like [Configuration](#configuration) and let SudokuBoard run on its default settings until your ready to read more. 
+If you want to focus on just the important parts for now, you can skip sections like [Configuration](#configuration) and let SudokuBoard run on its default settings until you're ready to read more. 
 
 However, be sure to read [Installation](#installation) and [Usage](#usage), plus anything about mouse mode if you end up using it. That's the bare minimum info you need to use SudokuBoard effectively. 
 
@@ -73,7 +73,7 @@ The settings here can be edited by opening the `settings.ini` file in Notepad, c
 
 `mouseMode` lets you start the script in Mouse Mode by default. You can of course toggle Mouse Mode while the script is running, but this setting lets you make Mouse Mode the default. 
 
-The next four settings hold the data for the mouse calibration. You can read more about in [Features](#features). The values saved here work for one puzzle in the position you calibrated the mouse in. If you want to recalibrate for a diffrent position or puzzle you can comment out these four values by preceding them with a semicolon, like so:
+The next four settings hold the data for the mouse calibration. You can read more about in [Features](#features). The values saved here work for one puzzle in the position you calibrated the mouse in. If you want to recalibrate for a different position or puzzle you can comment out these four values by preceding them with a semicolon, like so:
 ```
 ; startPositionX =0
 ; startPositionY=0
@@ -98,7 +98,7 @@ After calibration, you'll have the option to save the calibration, save the cali
 --- 
 ## Usage 
 
-The following three sections detail how exactly to use SudokuBoard. This will cover the keyboard controls, how exactly to use SudokuBoard's navigation method in the best way, and how and why to use the optional mouse mode.
+The following three sections detail how exactly to use SudokuBoard. This will cover the keyboard controls, how to use SudokuBoard's navigation method effectively, and how and why to use the optional mouse mode.
 
 Using SudokuBoard is pretty simple. 
 
@@ -323,6 +323,6 @@ Other bug fixes, cleanups, and features are also welcomed.
 
 --- 
 ## [License](./LICENSE)
-This website uses the open-source MIT License.
+This script uses the open-source MIT License.
 
 --- 
