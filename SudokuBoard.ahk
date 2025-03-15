@@ -3,6 +3,8 @@
 ; Sets absolute coordinates for tooltip
 CoordMode("ToolTip", "Screen")
 CoordMode("Mouse", "Screen")
+; Sets Mouse Move Speed
+SetDefaultMouseSpeed 0
 ; Set Tray Icon
 TraySetIcon("./assets/icon-file/icon.ico")
 #Include ./util/ini-functions.ahk
@@ -277,6 +279,7 @@ cursorMove(movementArr){
     ; ToolTip(cartesianCoordinates[1] cartesianCoordinates[2])
 }
 
+; Handles moving the mouse to the inputted coordinates for Mouse Mode
 mouseMovement(targetCoord){
     global
     ; Formula for calculating the screen coordinates based on the starting position, the offsets, and the cartesian coordinates; the one at the end is the number of clicks
